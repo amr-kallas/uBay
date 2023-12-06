@@ -1,5 +1,4 @@
-import { Box } from '@mui/material'
-import { useEffect, useRef } from 'react'
+import { Box, CircularProgress } from '@mui/material'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { UseInfiniteQueryResult } from 'react-query'
 type infinite = {
@@ -7,23 +6,26 @@ type infinite = {
   children: React.ReactNode
 }
 const InfiniteScrollPost = ({ children, query }: infinite) => {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    if (
-      window.innerHeight > (ref.current!.scrollHeight + 1000 ?? 0) &&
-      query.data
-    ) {
-      query.fetchNextPage()
-    }
-  }, [query])
+  const {hasNextPage,data,fetchNextPage}=query
   return (
     <InfiniteScroll
-      dataLength={query.data?.pages.length ?? 0}
-      next={query.fetchNextPage}
-      hasMore={query.hasNextPage ?? false}
-      loader={<h4>Loading...</h4>}
+      dataLength={data?.pages.length ?? 0}
+      next={fetchNextPage}
+      hasMore={hasNextPage ?? false}
+      loader={
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="100px"
+        >
+          <CircularProgress />
+        </Box>
+      }
     >
-      <Box mt={6} ref={ref}>{children}</Box>
+      <Box mt={6} mb={{ xs: 7, sm: 0 }} px={1} >
+        {children}
+      </Box>
     </InfiniteScroll>
   )
 }

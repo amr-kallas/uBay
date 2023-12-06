@@ -4,7 +4,6 @@ import HomeIcon from '@mui/icons-material/Home'
 import ForumIcon from '@mui/icons-material/Forum'
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore'
 import person from '../../../assets/person.jpg'
-import MobileNavigation from './MobileNavigation'
 const Tabs = () => {
   const [value, setValue] = useState('home')
 
@@ -60,7 +59,6 @@ const Tabs = () => {
       <IconButton sx={{display: { xs: 'block', sm: 'none' },ml:'auto'}}>
         <Avatar src={person} sx={{ width: 30, height: 30 }} />
       </IconButton>
-      <MobileNavigation value={value} setValue={setValue}/>
     </Box>
   )
 }

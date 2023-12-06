@@ -52,6 +52,24 @@ const theme = createTheme({
     fontSize:12
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        "::-webkit-scrollbar": {
+          width: 4,
+          height: 4,
+        },
+        "::-webkit-scrollbar-track": {
+          background: themeConstants.primary05,
+        },
+        "::-webkit-scrollbar-thumb": {
+          background: themeConstants.primary4,
+          borderRadius: 1,
+        },
+        "::-webkit-scrollbar-thumb:hover": {
+          background: themeConstants.primary9,
+        },
+      },
+    },
     MuiInputBase: {
       styleOverrides: {
         root: {

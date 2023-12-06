@@ -4,36 +4,26 @@ import {
   Button,
   Chip,
   Divider,
-  IconButton,
-  Menu,
-  MenuItem,
   Paper,
   Stack,
   Typography,
 } from '@mui/material'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import TelegramIcon from '@mui/icons-material/Telegram'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
-import { useState } from 'react'
-import { product } from '../../api/type'
+import { Post } from '../../api/type'
 import LikeButton from '../../../../components/button/LikeButton'
+import PostAction from '../PostAction'
+import queries from '../../../account/api/queries'
+import Timeago from '../../../../lib/timeago'
+type PostCard={
+  postDetails:Post
+}
 
-const ShowPost = ({ postDetails }:{postDetails:product}) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-
-  console.log(postDetails)
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+const ShowPost = ({ postDetails }:PostCard) => {
+  const isMe = queries.GetMe()
   return (
     <Box>
-      <Stack key={postDetails._id} mb={{ xs: 7, sm: 0 }}>
+      <Stack key={postDetails._id}>
         <Paper
           sx={{
             width: { xs: '100%', sm: '500px' },
@@ -76,17 +66,21 @@ const ShowPost = ({ postDetails }:{postDetails:product}) => {
                   sx={{
                     fontSize: '9px',
                     color: 'rgba(0,0,0,0.6)',
+                    display:'flex',
+                    alignItems:'center'
                   }}
                   variant="body2"
                 >
-                  {`${postDetails.store.name} - ${postDetails.store.city.name}`}
+                  <Timeago date={postDetails.createdAt}/>{'\u00A0'}
+                  {`| ${'\u00A0'}${postDetails.store.name} - ${postDetails.store.city.name}`}
                 </Typography>
               </Box>
             </Stack>
             <Box sx={{ mt: '-7px' }}>
-              <IconButton onClick={handleClick}>
-                <MoreVertIcon />
-              </IconButton>
+              <PostAction
+                userId={postDetails.user._id}
+                postId={postDetails._id}
+              />
             </Box>
           </Stack>
           <Box mb={1}>
@@ -165,7 +159,10 @@ const ShowPost = ({ postDetails }:{postDetails:product}) => {
           </Stack>
           <Divider />
           <Stack direction="row">
-            <LikeButton postId={postDetails._id} />
+            <LikeButton
+              postId={postDetails._id}
+              liked={postDetails.likedByMe}
+            />
             <Button
               sx={{
                 flex: 1,
@@ -176,39 +173,20 @@ const ShowPost = ({ postDetails }:{postDetails:product}) => {
             >
               <ChatBubbleIcon />
             </Button>
-            <Button
-              sx={{
-                flex: 1,
-                textAlign: 'center',
-                cursor: 'pointer',
-                p: '8px 0',
-              }}
-            >
-              <TelegramIcon />
-            </Button>
+            {postDetails.user._id != isMe.data?._id && (
+              <Button
+                sx={{
+                  flex: 1,
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  p: '8px 0',
+                }}
+              >
+                <TelegramIcon />
+              </Button>
+            )}
           </Stack>
         </Paper>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          sx={{
-            ul: {
-              p: 0,
-            },
-            li: {
-              width: 140,
-            },
-            boxShadow: '0 0 4px ddd',
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem onClick={handleClose}>
-            <ContentCopyIcon sx={{ mr: 1.2 }} /> Copy Link
-          </MenuItem>
-        </Menu>
       </Stack>
     </Box>
   )

@@ -2,11 +2,11 @@ import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import ForumIcon from '@mui/icons-material/Forum'
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore'
-type Tabs = {
-  value: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
-}
-const MobileNavigation = ({ value, setValue }: Tabs) => {
+import { useState } from 'react'
+
+const MobileNavigation = () => {
+  const [value, setValue] = useState('home')
+
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }

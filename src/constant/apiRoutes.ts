@@ -11,11 +11,15 @@ let API_ROUTES = {
     root:'users',
     ME:'me'
   },
-  Product:{
+  Post:{
     root:'products',
     GET_ALL:'',
     ADD_POST:'',
-    LIKE:(id:string)=>`${id}/likes`
+    GET:(id:string)=>id,
+    EDIT:(id:string)=>id,
+    DELETE:(id:string)=>id,
+    LIKE:(id:string)=>`${id}/likes`,
+    UNLIKE:(id:string)=>`${id}/likes`
     
   }
 }
@@ -25,7 +29,7 @@ const controllersArr = Object.entries(API_ROUTES).map(
     const routesPrefixed = Object.fromEntries(
       routesArr.map(([routeKey, route]) => {
         if (typeof route === "function") {
-          return [routeKey, (...params: Parameters<typeof route>) => `${root}/${route(...params)}`];
+          return [routeKey, (...params: any[]) => `${root}/${route(...params)}`];
         }
         return [routeKey, `${root}/${route}`]
       })

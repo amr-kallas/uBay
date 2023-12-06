@@ -1,4 +1,6 @@
-export type product = {
+import { User } from "../../account/api/type"
+
+export type Post = {
   _id: string
   category: {
     description: string
@@ -6,7 +8,7 @@ export type product = {
   }
   comments: number
   content: string
-  createdAt: string
+  createdAt: Date
   is_paid: boolean
   coupons: any[]
   likedByMe: boolean
@@ -21,9 +23,4 @@ export type product = {
   }
   user: User
   title: string
-}
-export type User={
-  photo: string
-  name: string
-  _id: string
 }
