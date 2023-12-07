@@ -9,12 +9,12 @@ import {
   Typography,
 } from '@mui/material'
 import TelegramIcon from '@mui/icons-material/Telegram'
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 import { Post } from '../../api/type'
 import LikeButton from '../../../../components/button/LikeButton'
 import PostAction from '../PostAction'
 import queries from '../../../account/api/queries'
 import Timeago from '../../../../lib/timeago'
+import CommentIcon from './CommentIcon'
 type PostCard={
   postDetails:Post
 }
@@ -163,16 +163,7 @@ const ShowPost = ({ postDetails }:PostCard) => {
               postId={postDetails._id}
               liked={postDetails.likedByMe}
             />
-            <Button
-              sx={{
-                flex: 1,
-                textAlign: 'center',
-                cursor: 'pointer',
-                p: '8px 0',
-              }}
-            >
-              <ChatBubbleIcon />
-            </Button>
+            <CommentIcon  PostId={postDetails._id}/>
             {postDetails.user._id != isMe.data?._id && (
               <Button
                 sx={{
