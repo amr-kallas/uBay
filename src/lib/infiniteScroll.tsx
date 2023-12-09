@@ -1,14 +1,15 @@
 import { Box, CircularProgress } from '@mui/material'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import Infinite from 'react-infinite-scroll-component'
 import { UseInfiniteQueryResult } from 'react-query'
 type infinite = {
   query: UseInfiniteQueryResult<any, unknown>
   children: React.ReactNode
 }
-const InfiniteScrollPost = ({ children, query }: infinite) => {
+const InfiniteScroll = ({ children, query }: infinite) => {
+  console.log(query)
   const {hasNextPage,data,fetchNextPage}=query
   return (
-    <InfiniteScroll
+    <Infinite
       dataLength={data?.pages.length ?? 0}
       next={fetchNextPage}
       hasMore={hasNextPage ?? false}
@@ -17,17 +18,17 @@ const InfiniteScrollPost = ({ children, query }: infinite) => {
           display="flex"
           justifyContent="center"
           alignItems="center"
-          height="100px"
+          height="50px"
+          position='relative'
+          top='-50px'
         >
           <CircularProgress />
         </Box>
       }
     >
-      <Box mt={6} mb={{ xs: 7, sm: 0 }} px={1} >
         {children}
-      </Box>
-    </InfiniteScroll>
+    </Infinite>
   )
 }
 
-export default InfiniteScrollPost
+export default InfiniteScroll

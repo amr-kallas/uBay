@@ -29,6 +29,7 @@ const MessageInput = ({ control, name, isLoading }: Message) => {
           fieldset: {
             border: 'none',
             bgcolor: '#eee',
+            zIndex:-1
           },
         }}
       />

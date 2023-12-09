@@ -1,22 +1,28 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 import API from './api'
-import { useMutation, useQuery } from 'react-query'
-import { API_List, Comment } from './type'
+import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
+import { API_List, Comment, ParamsWithId } from './type'
 
 export const keys = createQueryKeys('comment', {
-  getComments: (id:string) => ({
+  getComments: (id: string) => ({
     queryFn: () => API.getCommentById(id),
     queryKey: [id],
   }),
-  getAll:(id:string)=>({
-    queryFn:()=>API.getAll(id),
-    queryKey:[id]
-  })
+  getAll: (params: ParamsWithId) => ({
+    queryFn: async (context) => {
+      console.log(context)
+      const newParams = { ...params, page: context.pageParam??1 }
+      const data = await API.getAll(newParams)
+      return data
+    },
+    queryKey: [params],
+  }),
 })
-export const queries={
-    Comments:(id:string)=>useQuery<API_List<Comment>>({...keys.getAll(id),enabled:!!id}),
-    CommentById:(id:string)=>useQuery({...keys.getComments(id),enabled:!!id}),
-    AddComment:()=>useMutation(API.addComment),
-    EditComment:()=>useMutation(API.editComment),
-    RemoveComment:()=>useMutation(API.deleteComment)
+export const queries = {
+  Comments: (params: ParamsWithId) =>
+    useInfiniteQuery<API_List<Comment>>(keys.getAll(params)),
+  CommentById: (id: string) => useQuery(keys.getComments(id)),
+  AddComment: () => useMutation(API.addComment),
+  EditComment: () => useMutation(API.editComment),
+  RemoveComment: () => useMutation(API.deleteComment),
 }

@@ -14,12 +14,15 @@ import LikeButton from '../../../../components/button/LikeButton'
 import PostAction from '../PostAction'
 import queries from '../../../account/api/queries'
 import Timeago from '../../../../lib/timeago'
-import CommentIcon from './CommentIcon'
-type PostCard={
-  postDetails:Post
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
+import { usePostIdContext } from '../../../../context/postIdContext'
+
+type PostCard = {
+  postDetails: Post
 }
 
-const ShowPost = ({ postDetails }:PostCard) => {
+const ShowPost = ({ postDetails }: PostCard) => {
+  const { setId } = usePostIdContext()
   const isMe = queries.GetMe()
   return (
     <Box>
@@ -66,13 +69,16 @@ const ShowPost = ({ postDetails }:PostCard) => {
                   sx={{
                     fontSize: '9px',
                     color: 'rgba(0,0,0,0.6)',
-                    display:'flex',
-                    alignItems:'center'
+                    display: 'flex',
+                    alignItems: 'center',
                   }}
                   variant="body2"
                 >
-                  <Timeago date={postDetails.createdAt}/>{'\u00A0'}
-                  {`| ${'\u00A0'}${postDetails.store.name} - ${postDetails.store.city.name}`}
+                  <Timeago date={postDetails.createdAt} />
+                  {'\u00A0'}
+                  {`| ${'\u00A0'}${postDetails.store.name} - ${
+                    postDetails.store.city.name
+                  }`}
                 </Typography>
               </Box>
             </Stack>
@@ -163,7 +169,17 @@ const ShowPost = ({ postDetails }:PostCard) => {
               postId={postDetails._id}
               liked={postDetails.likedByMe}
             />
-            <CommentIcon  PostId={postDetails._id}/>
+            <Button
+              sx={{
+                flex: 1,
+                textAlign: 'center',
+                cursor: 'pointer',
+                p: '8px 0',
+              }}
+              onClick={() => setId(postDetails._id)}
+            >
+              <ChatBubbleIcon />
+            </Button>
             {postDetails.user._id != isMe.data?._id && (
               <Button
                 sx={{

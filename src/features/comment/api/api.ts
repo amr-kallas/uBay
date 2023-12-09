@@ -1,10 +1,14 @@
 import API_ROUTES from '../../../constant/apiRoutes'
 import axios from '../../../lib/axios'
-import { API_List, AddComment, Comment } from './type'
+import { paginateParams } from '../../../utils/apiHelpers'
+import { API_List, AddComment, Comment, ParamsWithId } from './type'
 
 const API = {
-  getAll: async (id: string) => {
-    const { data } = await axios.get<API_List<Comment>>(API_ROUTES.Post.COMMENTS(id))
+  getAll: async ({id,...params}:ParamsWithId) => {
+    console.log(params)
+    const { data } = await axios.get<API_List<Comment>>(API_ROUTES.Post.COMMENTS(id),{
+      params:paginateParams(params)
+    })
     return data
   },
   getCommentById: async (id: string) => {
