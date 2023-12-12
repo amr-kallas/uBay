@@ -16,6 +16,7 @@ export type AddComment = {
   user: string
   product: string
 }
+export type EditComment = { body: AddComment; id: string }
 export type ParamsWithId = {
   limit: number
   page?: number

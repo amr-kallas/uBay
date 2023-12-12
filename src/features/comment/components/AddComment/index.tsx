@@ -8,23 +8,30 @@ import { Message, defaultValue } from './validation'
 const AddComment = ({ PostID }: { PostID: string }) => {
   const isMe = queries.GetMe()
   const add = commentQuery.AddComment()
-  const { control, handleSubmit,reset } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: defaultValue,
   })
   const queryClient = useQueryClient()
   const onSubmit = (message: Message) => {
-    reset(defaultValue)
     const body = {
       ...message,
       user: isMe.data!._id,
       product: PostID,
     }
     if (message.content) {
-        console.log(message)
       add.mutate(body, {
         onSuccess: (data) => {
-          console.log(data)
+          queryClient.setQueriesData(keys.getAll._def, (oldData: any) => {
+            const newPages = oldData.pages.map((page: any) => {
+              if (page.data[0].product == PostID) {
+                return { ...page, data: [data, ...page.data] }
+              }
+              return page
+            })
+            return { ...oldData, pages: newPages }
+          })
           queryClient.invalidateQueries(keys.getAll._def)
+          reset(defaultValue)
         },
         onError: (err) => console.log(err),
       })
@@ -36,7 +43,7 @@ const AddComment = ({ PostID }: { PostID: string }) => {
       sx={{
         position: 'fixed',
         bottom: 0,
-        width: {xs:1,sm:390},
+        width: { xs: 1, sm: 390 },
         bgcolor: 'white',
       }}
     >
@@ -46,7 +53,11 @@ const AddComment = ({ PostID }: { PostID: string }) => {
           p: '0 16px 8px',
         }}
       >
-        <MessageInput control={control} name="content" isLoading={add.isLoading} />
+        <MessageInput
+          control={control}
+          name="content"
+          isLoading={add.isLoading}
+        />
       </Box>
     </Box>
   )

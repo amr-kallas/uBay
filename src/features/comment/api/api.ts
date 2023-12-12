@@ -1,11 +1,10 @@
 import API_ROUTES from '../../../constant/apiRoutes'
 import axios from '../../../lib/axios'
 import { paginateParams } from '../../../utils/apiHelpers'
-import { API_List, AddComment, Comment, ParamsWithId } from './type'
+import { API_List, AddComment, Comment, EditComment, ParamsWithId } from './type'
 
 const API = {
   getAll: async ({id,...params}:ParamsWithId) => {
-    console.log(params)
     const { data } = await axios.get<API_List<Comment>>(API_ROUTES.Post.COMMENTS(id),{
       params:paginateParams(params)
     })
@@ -19,8 +18,8 @@ const API = {
     const { data } = await axios.post(API_ROUTES.Comment.ADD,body)
     return data
   },
-  editComment: async (id:string) => {
-    const { data } = await axios.patch(API_ROUTES.Comment.EDIT(id))
+  editComment: async ({id,body}:EditComment) => {
+    const { data } = await axios.patch(API_ROUTES.Comment.EDIT(id),body)
     return data
   },
   deleteComment: async (id:string) => {

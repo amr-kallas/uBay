@@ -6,11 +6,10 @@ type infinite = {
   children: React.ReactNode
 }
 const InfiniteScroll = ({ children, query }: infinite) => {
-  console.log(query)
-  const {hasNextPage,data,fetchNextPage}=query
+  const { hasNextPage, data, fetchNextPage } = query
   return (
     <Infinite
-      dataLength={data?.pages.length ?? 0}
+      dataLength={data?.pages.length??0}
       next={fetchNextPage}
       hasMore={hasNextPage ?? false}
       loader={
@@ -19,14 +18,14 @@ const InfiniteScroll = ({ children, query }: infinite) => {
           justifyContent="center"
           alignItems="center"
           height="50px"
-          position='relative'
-          top='-50px'
+          position="relative"
+          top="-50px"
         >
           <CircularProgress />
         </Box>
       }
     >
-        {children}
+      {children}
     </Infinite>
   )
 }

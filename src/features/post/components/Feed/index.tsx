@@ -9,7 +9,7 @@ import ShowPost from './ShowPost'
 
 const Post = () => {
   const { q } = useQuerySearchParams()
-  const showPost = queries.GetAll({ limit: 10, is_paid: false, q })
+  const showPost = queries.GetAll({ limit: 4, is_paid: false, q })
   return (
     <InfiniteScroll query={showPost}>
       <Box mt={6} mb={{ xs: 7, sm: 0 }} px={1} >
