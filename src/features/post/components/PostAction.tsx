@@ -2,21 +2,33 @@ import { useState } from 'react'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import EditIcon from '@mui/icons-material/Edit'
-import { Box, Divider, IconButton, Menu, MenuItem } from '@mui/material'
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+} from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import queries from '../../account/api/queries'
+import query, { keys } from '../api/queries'
 import { WEB_SITE_URL } from '../../../constant/domain'
 import API_ROUTES from '../../../constant/apiRoutes'
 import { useSnackbarContext } from '../../../context/snackbarContext'
+import { useQueryClient } from 'react-query'
 type user = {
-  userId?: string
-  postId?: string
+  userId: string
+  postId: string
+  onRemove: () => void
 }
-const PostAction = ({ userId, postId }: user) => {
+const PostAction = ({ userId, postId, onRemove }: user) => {
   const snackbar = useSnackbarContext()
+  const deletePost = query.Delete()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const isMe = queries.GetMe()
+  const queryClient = useQueryClient()
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -33,6 +45,19 @@ const PostAction = ({ userId, postId }: user) => {
         })
       })
     setAnchorEl(null)
+  }
+  const handleDelete = () => {
+    deletePost.mutate(postId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(keys.getAll._def)
+        onRemove()
+        handleClose()
+      },
+      onError: (error) => {
+        console.log(error)
+        handleClose()
+      },
+    })
   }
   return (
     <>
@@ -63,8 +88,13 @@ const PostAction = ({ userId, postId }: user) => {
             <MenuItem onClick={handleClose}>
               <EditIcon sx={{ mr: 1.2 }} /> Edit
             </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <DeleteIcon sx={{ mr: 1.2 }} /> Remove
+            <MenuItem onClick={handleDelete}>
+              {deletePost.isLoading ? (
+                <CircularProgress size={15} sx={{ mr: 1.2 }} />
+              ) : (
+                <DeleteIcon sx={{ mr: 1.2 }} />
+              )}
+              Remove
             </MenuItem>
             <Divider />
           </Box>
