@@ -1,62 +1,70 @@
-import { Box, Tab, Tabs as MuiTabs, Avatar, IconButton, useTheme } from '@mui/material'
-import { useState } from 'react'
-import HomeIcon from '@mui/icons-material/Home'
-import ForumIcon from '@mui/icons-material/Forum'
-import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore'
+import {
+  Box,
+  Tab,
+  Tabs as MuiTabs,
+  Avatar,
+  IconButton,
+  useTheme,
+} from '@mui/material'
+import { useEffect, useState } from 'react'
+import { tabs } from '../constant/tabs'
 import person from '../../../assets/person.jpg'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 const Tabs = () => {
+  const location = useLocation().pathname.slice(1)
   const [value, setValue] = useState('home')
 
+  useEffect(() => {
+    if (
+      tabs.some(
+        (tab) =>
+          tab.value === location || (tab.value == 'home' && location == '')
+      )
+    ) {
+      setValue(location == '' ? 'home' : location)
+    } else {
+      setValue('none')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location])
+  const navigate = useNavigate()
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
-  const theme=useTheme()
+  const theme = useTheme()
   return (
-    <Box sx={{flex:{xs:0,sm:2}}}>
+    <Box sx={{ flex: { xs: 0, sm: 2 } }}>
       <MuiTabs
         value={value}
         onChange={handleChange}
         aria-label="basic tabs example"
-        sx={{ display: { xs: 'none', sm: 'block' },
-         '.Mui-selected':{
-          svg:{
-            color:theme.palette.primary.main
-          } }}}
-      >
-        <Tab
-         sx={{
-          svg:{
-            color: 'grey',
-          },
-        }}
-          value="home"
-          icon={<HomeIcon sx={{ width: 24, height: 30 }} />}
-        />
-        <Tab
-         sx={{
-          svg:{
-            color: 'grey',
-          },
-        }}
-          value="sells"
-          icon={<ForumIcon sx={{ width: 24, height: 30 }} />}
-        />
-        <Tab
-          value="chat"
-          sx={{
-            svg:{
-              color: 'grey',
+        sx={{
+          display: { xs: 'none', sm: 'block' },
+          '.Mui-selected': {
+            svg: {
+              color: theme.palette.primary.main,
             },
-          }}
-          icon={<LocalGroceryStoreIcon sx={{ width: 24, height: 30 }} />}
-        />
-        <Tab
-          value="img"
-          sx={{ ml: 'auto' }}
-          icon={<Avatar src={person} sx={{ width: 30, height: 30 }} />}
-        />
+          },
+        }}
+      >
+        {tabs.map((tab) => (
+          <Tab
+            key={tab.value}
+            sx={{
+              svg: {
+                color: 'grey',
+              },
+              ml: tab.value == 'settings' ? 'auto' : 'undefined',
+            }}
+            value={tab.value}
+            icon={tab.icon}
+            onClick={() => navigate(tab.path)}
+          />
+        ))}
+        <Tab value="none" sx={{ position: 'absolute', marginLeft: -9999 }} />
       </MuiTabs>
-      <IconButton sx={{display: { xs: 'block', sm: 'none' },ml:'auto'}}>
+      <IconButton sx={{ display: { xs: 'block', sm: 'none' }, ml: 'auto' }}>
         <Avatar src={person} sx={{ width: 30, height: 30 }} />
       </IconButton>
     </Box>

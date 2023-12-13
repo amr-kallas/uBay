@@ -1,8 +1,8 @@
 
-const index = () => {
+const AddPost = () => {
   return (
-    <div>index</div>
+    <div>AddPost</div>
   )
 }
 
-export default index
+export default AddPost

@@ -1,12 +1,14 @@
-import { Stack } from '@mui/material'
+import { Stack, useMediaQuery, useTheme } from '@mui/material'
 import { Link } from 'react-router-dom'
 import logo from '../../../assets/logo.svg'
 import Search from './Search'
 import Tabs from './Tabs'
 import HideOnScroll from './HideOnScroll'
 const AppBar = () => {
+  const theme=useTheme()
+  const isSmallScreen=useMediaQuery(theme.breakpoints.down('sm'))
   return (
-    <HideOnScroll>
+    <HideOnScroll direction='down' active={isSmallScreen}>
       <Stack
         direction="row"
         sx={{
