@@ -12,7 +12,7 @@ const Submit = ({ children, sx, isLoading, ...props }: submitButton) => {
       type="submit"
       loading={isLoading}
       {...props}
-      sx={{ ...sx, p: '12px 42px', m: '0 auto' }}
+      sx={{ ...sx }}
     >
       {children}
     </LoadingButton>

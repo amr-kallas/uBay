@@ -4,3 +4,4 @@ export interface APIList<T> {
     totalDataCount: number;
     data: T[];
   }
+  

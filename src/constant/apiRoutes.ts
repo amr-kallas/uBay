@@ -29,6 +29,14 @@ let API_ROUTES = {
     GET:(id:string)=>id,
     EDIT:(id:string)=>id,
     DELETE:(id:string)=>id,
+  },
+  Categories:{
+    root:'categories',
+    GETALL:''
+  },
+  Stores:{
+    root:'stores',
+    GETALL:''
   }
 }
 const controllersArr = Object.entries(API_ROUTES).map(
