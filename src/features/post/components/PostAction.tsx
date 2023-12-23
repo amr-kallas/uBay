@@ -17,12 +17,14 @@ import { WEB_SITE_URL } from '../../../constant/domain'
 import API_ROUTES from '../../../constant/apiRoutes'
 import { useSnackbarContext } from '../../../context/snackbarContext'
 import { useQueryClient } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 type user = {
   userId: string
   postId: string
-  onRemove: () => void
+  onRemove?: () => void
 }
 const PostAction = ({ userId, postId, onRemove }: user) => {
+  const navigate = useNavigate()
   const snackbar = useSnackbarContext()
   const deletePost = query.Delete()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -50,14 +52,19 @@ const PostAction = ({ userId, postId, onRemove }: user) => {
     deletePost.mutate(postId, {
       onSuccess: () => {
         queryClient.invalidateQueries(keys.getAll._def)
-        onRemove()
+        onRemove && onRemove()
         handleClose()
+        navigate('/')
       },
       onError: (error) => {
         console.log(error)
         handleClose()
       },
     })
+  }
+  const handleEdit = () => {
+    navigate(`/posts/edit/${postId}`)
+    handleClose()
   }
   return (
     <>
@@ -85,7 +92,7 @@ const PostAction = ({ userId, postId, onRemove }: user) => {
       >
         {isMe.data?._id == userId && (
           <Box>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={handleEdit}>
               <EditIcon sx={{ mr: 1.2 }} /> Edit
             </MenuItem>
             <MenuItem onClick={handleDelete}>

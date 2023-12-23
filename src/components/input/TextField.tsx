@@ -11,11 +11,13 @@ export type TextFieldProps<controlled extends boolean = false> =
           name: string
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           control: Control<any>
+          disabled?:boolean
         }
       : { control?: undefined })
 const TextField = ({
   name,
   control,
+  disabled,
   ...props
 }: TextFieldProps<true | false>) => {
   if (control) {
@@ -29,6 +31,7 @@ const TextField = ({
             {...field}
             error={!!error}
             helperText={error?.message}
+            disabled={disabled}
           />
         )}
       />

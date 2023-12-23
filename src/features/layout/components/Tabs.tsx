@@ -5,15 +5,17 @@ import {
   Avatar,
   IconButton,
   useTheme,
+  Skeleton,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { tabs } from '../constant/tabs'
-import person from '../../../assets/person.jpg'
 import { useLocation, useNavigate } from 'react-router-dom'
+import queries from '../../account/api/queries'
 
 const Tabs = () => {
   const location = useLocation().pathname.slice(1)
   const [value, setValue] = useState('home')
+  const me = queries.GetMe()
 
   useEffect(() => {
     if (
@@ -65,7 +67,11 @@ const Tabs = () => {
         <Tab value="none" sx={{ position: 'absolute', marginLeft: -9999 }} />
       </MuiTabs>
       <IconButton sx={{ display: { xs: 'block', sm: 'none' }, ml: 'auto' }}>
-        <Avatar src={person} sx={{ width: 30, height: 30 }} />
+        {me.isLoading ? (
+          <Skeleton variant="circular" width={30} height={30} />
+        ) : (
+          <Avatar src={me.data?.photo} sx={{ width: 30, height: 30 }} />
+        )}
       </IconButton>
     </Box>
   )

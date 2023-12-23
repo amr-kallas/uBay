@@ -19,6 +19,7 @@ import Timeago from '../../../../lib/timeago'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 import { usePostIdContext } from '../../../../context/postIdContext'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type PostCard = {
   postDetails: Post
@@ -28,8 +29,12 @@ const ShowPost = ({ postDetails }: PostCard) => {
   const { setId } = usePostIdContext()
   const [open,setOpen]=useState(true)
   const isMe = queries.GetMe()
+  const navigate=useNavigate()
   const onRemove=()=>{
     setOpen(false)
+  }
+  const DetailPost=()=>{
+    navigate(`/posts/${postDetails._id}`)
   }
   return (
     <Slide in={open} appear={false} unmountOnExit direction='right' timeout={500}>
@@ -99,7 +104,7 @@ const ShowPost = ({ postDetails }: PostCard) => {
                 />
               </Box>
             </Stack>
-            <Box mb={1}>
+            <Box mb={1} sx={{cursor:'pointer'}} onClick={DetailPost}>
               <Box p={'0 16px'}>
                 <Typography variant="h6">{postDetails.title}</Typography>
                 <Typography variant="body1">{postDetails.content}</Typography>

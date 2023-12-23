@@ -7,14 +7,19 @@ import {
 } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
 import UploadIcon from '@mui/icons-material/Upload'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 type UploadImg = {
   onUpload: (file: File[]) => void
   onRemove: () => void
   error: any
+  imgURL: string[]
 }
-const UploadImg = ({ onRemove, onUpload, error }: UploadImg) => {
-  const [uploadFiles, setUploadFiles] = useState<string[]>([])
+const UploadImg = ({ onRemove, onUpload, error, imgURL }: UploadImg) => {
+  const initialArray = typeof imgURL == 'string' ? [imgURL] : imgURL ?? []
+  const [uploadFiles, setUploadFiles] = useState<string[]>(initialArray)
+  useEffect(() => {
+    setUploadFiles(Array.isArray(imgURL) ? imgURL : [imgURL])
+  }, [imgURL])
   const handleFileChange = (e: any) => {
     const files: File[] = Array.from(e.target.files)
     files.map((file: File) => {
@@ -46,15 +51,11 @@ const UploadImg = ({ onRemove, onUpload, error }: UploadImg) => {
         sx={{
           width: '100%',
           minHeight: '52px',
-          border: `1px solid ${
-            error ? '#d32f2f' : 'rgba(0, 0, 0, 0.23)'
-          }`,
+          border: `1px solid ${error ? '#d32f2f' : 'rgba(0, 0, 0, 0.23)'}`,
           borderRadius: '12px',
           cursor: 'pointer',
           '&:hover': {
-            border: `1px solid ${
-              error ? '#d32f2f' : 'black'
-            }`
+            border: `1px solid ${error ? '#d32f2f' : 'black'}`,
           },
         }}
       >

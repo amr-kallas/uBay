@@ -24,14 +24,17 @@ export type Post = {
   user: User
   title: string
 }
-export type AddPost={
-  title:string,
-  content:string,
-  price:number,
-  category:string,
-  store:string
-  photos:File[]
+export type AddPost = {
+  title: string
+  content: string
+  price: number
+  category: string
+  store: string
+  photos: File[]
 }
+export type EditPost = {
+  id: string
+} & AddPost
 export type CategoryDetails = {
   _id: string
   name: string

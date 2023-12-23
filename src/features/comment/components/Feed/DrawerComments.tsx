@@ -26,6 +26,7 @@ const DrawerComment = () => {
           maxWidth: { xs: 1, sm: 390 },
           width: 1,
           margin: { xs: 'auto', sm: '' },
+          zIndex:3333
         },
       }}
     >

@@ -2,6 +2,7 @@ import {
   FormControl,
   FormHelperText,
   InputLabel,
+  MenuProps,
   Select as MuiSelect,
   SelectProps as MuiSelectProps,
 } from '@mui/material'
@@ -11,7 +12,34 @@ type SelectProps = {
   children: React.ReactNode
   name: string
 } & MuiSelectProps
-
+const MenuProps:Partial<MenuProps>={
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8,
+      width: 250,
+    },
+  },
+  anchorOrigin: {
+    vertical: "top",
+    horizontal: "left"
+  },
+  transformOrigin: {
+    vertical: "bottom",
+    horizontal: "left"
+  },
+  // getContentAnchorEl: null
+}
+// MenuProps={{
+//   anchorOrigin: {
+//     vertical: "bottom",
+//     horizontal: "left"
+//   },
+//   transformOrigin: {
+//     vertical: "top",
+//     horizontal: "left"
+//   },
+//   getContentAnchorEl: null
+// }}
 const Select = ({ control, children, name, ...props }: SelectProps) => {
   return (
     <div>
@@ -31,6 +59,7 @@ const Select = ({ control, children, name, ...props }: SelectProps) => {
                   {...field}
                   {...props}
                   error={!!error}
+                  MenuProps={MenuProps}
                 >
                   {children}
                 </MuiSelect>

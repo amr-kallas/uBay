@@ -19,7 +19,7 @@ export const keys = createQueryKeys('comment', {
 })
 export const queries = {
   Comments: (params: ParamsWithId) =>
-    useInfiniteQuery<API_List<Comment>>(keys.getAll(params)),
+    useInfiniteQuery<API_List<Comment>>({...keys.getAll(params),enabled:!!params.id}),
   CommentById: (id: string) => useQuery(keys.getComments(id)),
   AddComment: () => useMutation(API.addComment),
   EditComment: () => useMutation(API.editComment),

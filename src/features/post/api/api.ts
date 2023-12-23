@@ -3,7 +3,7 @@ import axios from '../../../lib/axios'
 import { APIList } from '../../../type/api'
 import { paginateParams } from '../../../utils/apiHelpers'
 import objectToFormData from '../../../utils/objectToFormData'
-import { AddPost, Category, CategoryDetails, Post, Store, StoreDetails } from './type'
+import { AddPost, Category, CategoryDetails, EditPost, Post, Store, StoreDetails } from './type'
 
 const API = {
   getAll: async (params: any) => {
@@ -20,8 +20,8 @@ const API = {
     const { data } = await axios.post(API_ROUTES.Post.ADD_POST,objectToFormData(body))
     return data
   },
-  edit: async (id: string) => {
-    const { data } = await axios.patch(API_ROUTES.Post.EDIT(id))
+  edit: async ({id,...body}:EditPost) => {
+    const { data } = await axios.patch(API_ROUTES.Post.EDIT(id),objectToFormData(body))
     return data
   },
   delete: async (id: string) => {

@@ -1,4 +1,11 @@
-import { MenuItem, Paper, Stack, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
+import {
+  LinearProgress,
+  MenuItem,
+  Paper,
+  Stack,
+  Typography,
+} from '@mui/material'
 import TextField from '../../../../components/input/TextField'
 import { useForm } from 'react-hook-form'
 import Select from '../../../../components/input/Select'
@@ -6,30 +13,43 @@ import queries from '../../api/queries'
 import { AddPost, CategoryDetails, StoreDetails } from '../../api/type'
 import Submit from '../../../../components/button/Submit'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { addSchema, defaultValues } from './validation'
-import { z } from 'zod'
+// import { addSchema, defaultValues } from './validation'
+// import { z } from 'zod'
 import UploadImg from '../../../../components/input/UploadImg'
-
-const AddPost = () => {
+import { useEffect } from 'react'
+import { PostDetail } from './helpers'
+import { addSchema, defaultValues } from '../AddPost/validation'
+const EditPost = () => {
+  const { id } = useParams() as { id: string }
+  const { data, isLoading, isSuccess } = queries.Get(id)
+  const category = queries.Categories()
+  const store = queries.Stores()
+  const edit = queries.Edit()
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
-  } = useForm<z.infer<typeof addSchema>>({
+  } = useForm({
+    defaultValues: isSuccess ? PostDetail(data) : defaultValues,
     resolver: zodResolver(addSchema),
-    defaultValues: defaultValues,
   })
-  const category = queries.Categories()
-  const store = queries.Stores()
-  const add = queries.Add()
-  const onSubmit = (data: AddPost) => {
-    add.mutate(data, {
-      onSuccess: (d) => {console.log(d)},
-      onError: (error) => {
-        console.log(error)
-      },
-    })
+  useEffect(() => {
+    if (data) reset(PostDetail(data))
+  }, [data, reset])
+
+  const onSubmit = (body: AddPost) => {
+    console.log(data)
+    edit.mutate(
+      { id, ...body },
+      {
+        onSuccess: () => {},
+        onError: (error) => {
+          console.log(error)
+        },
+      }
+    )
   }
   const onUpload = (files: File[]) => {
     const file = Array.from(files)
@@ -46,8 +66,9 @@ const AddPost = () => {
         mb: { xs: '100px', sm: '20px' },
       }}
     >
+      {isLoading && <LinearProgress />}
       <Typography variant="h4" color="primary" textAlign="center" pt={2} pb={7}>
-        Add a new piece
+        Modify Piece information
       </Typography>
       <Stack
         spacing={2}
@@ -55,23 +76,24 @@ const AddPost = () => {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField control={control} name="title" label="Title" />
+        <TextField control={control} name="title" label="Title" disabled={isLoading}/>
         <TextField
           control={control}
           name="content"
           label="Content"
           multiline
           rows={3}
+          disabled={isLoading}
         />
-        <TextField control={control} name="price" type="number" label="Price" />
-        <Select control={control} name="category">
+        <TextField control={control} name="price" type="number" label="Price" disabled={isLoading}/>
+        <Select disabled={isLoading} control={control} name="category">
           {category.data?.data.map((item: CategoryDetails) => (
             <MenuItem value={item._id} key={item._id}>
               {item.name}
             </MenuItem>
           ))}
         </Select>
-        <Select control={control} name="store">
+        <Select disabled={isLoading} control={control} name="store">
           {store.data?.data.map((item: StoreDetails) => (
             <MenuItem value={item._id} key={item._id}>
               {item.name}
@@ -82,7 +104,7 @@ const AddPost = () => {
           onRemove={onRemove}
           onUpload={onUpload}
           error={errors.photos}
-          // imgURL={[]}
+          imgURL={data?.photos || []}
         />
         <Submit
           sx={{
@@ -90,13 +112,13 @@ const AddPost = () => {
             m: '20px auto !important',
             p: '6px 30px !important',
           }}
-          isLoading={add.isLoading}
+          isLoading={edit.isLoading}
         >
-          Add
+          Save
         </Submit>
       </Stack>
     </Paper>
   )
 }
 
-export default AddPost
+export default EditPost

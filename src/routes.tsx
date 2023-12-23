@@ -7,7 +7,7 @@ import { Login, Register, ResetPassword, Signup } from './features/auth'
 import NotAuth from './components/routes/NotAuth'
 import Auth from './components/routes/Auth'
 import HomePage from './pages'
-import { AddPost, Post } from './features/post'
+import { AddPost, EditPost, Post, PostDetails } from './features/post'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default createBrowserRouter(
@@ -23,6 +23,8 @@ export default createBrowserRouter(
         <Route path='' element={<HomePage/>}>
           <Route path='' element={<Post/>}/>
           <Route path='posts/new' element={<AddPost/>}/>
+          <Route path='posts/edit/:id' element={<EditPost/>}/>
+          <Route path='posts/:id' element={<PostDetails/>}/>
         </Route>
       </Route>
     </Route>
