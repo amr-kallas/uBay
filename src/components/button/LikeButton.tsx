@@ -32,6 +32,14 @@ const LikeButton = ({ postId, liked }: LikdedButton) => {
       return { ...oldData, pages: newPages }
     })
 
+    queryClient.setQueryData(keys.get(postId).queryKey, (post:any) => {
+      if(!post) return undefined;
+      return {
+        ...post,
+        likedByMe: !post.likedByMe,
+        likes: !post.likedByMe ? post.likes + 1 : post.likes - 1,
+      }
+    })
     ;(!liked ? like : unLike).mutate(postId, {
       onSuccess: () => {
         queryClient.invalidateQueries(keys.getAll._def)

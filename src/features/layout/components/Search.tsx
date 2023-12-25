@@ -53,7 +53,6 @@ const Search = () => {
           ),
         }}
       />
-      {/* <IconButton type="submit" aria-label="search"></IconButton> */}
     </form>
   )
 }

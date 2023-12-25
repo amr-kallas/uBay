@@ -59,3 +59,34 @@ export type Store<T> = {
   data: T[]
   totalDataCount: number
 }
+
+export type Unpaid={
+  category:string,
+  coupons:any[],
+  photos:string[],
+  price:number,
+  store:string,
+  title:string,
+  _id:string
+}
+export type Wait={
+  customer:User,
+  payment:{
+    is_discount:boolean,
+    price_after:number,
+    _id:string
+  },
+  product:{
+    category:string,
+    photos:string[],
+    price:number,
+    store:string,
+    title:string,
+    _id:string
+  },
+  _id:string
+}
+export type Mine={
+  unpaid:Unpaid[],
+  wait:Wait[]
+}

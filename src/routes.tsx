@@ -8,6 +8,7 @@ import NotAuth from './components/routes/NotAuth'
 import Auth from './components/routes/Auth'
 import HomePage from './pages'
 import { AddPost, EditPost, Post, PostDetails } from './features/post'
+import Transaction from './pages/transaction'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default createBrowserRouter(
@@ -25,6 +26,7 @@ export default createBrowserRouter(
           <Route path='posts/new' element={<AddPost/>}/>
           <Route path='posts/edit/:id' element={<EditPost/>}/>
           <Route path='posts/:id' element={<PostDetails/>}/>
+          <Route path='/transactions' element={<Transaction/>}/>
         </Route>
       </Route>
     </Route>

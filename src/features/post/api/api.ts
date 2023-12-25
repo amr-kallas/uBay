@@ -44,5 +44,15 @@ const API = {
     const { data } = await axios.get<Store<StoreDetails>>(API_ROUTES.Stores.GETALL)
     return data
   },
+  Pay:async (body:any)=>{
+    const {data}=await axios.post(API_ROUTES.Payments.PAY,body)
+    return data
+  },
+  Mine:async (isBuy:boolean)=>{
+    const {data}=await axios.get(API_ROUTES.Post.MINE,{
+      params:{isBuy}
+    })
+    return data
+  }
 }
 export default API

@@ -20,7 +20,8 @@ let API_ROUTES = {
     DELETE:(id:string)=>id,
     LIKE:(id:string)=>`${id}/likes`,
     UNLIKE:(id:string)=>`${id}/likes`,
-    COMMENTS:(id:string)=>`${id}/comments`
+    COMMENTS:(id:string)=>`${id}/comments`,
+    MINE:'mine',
     
   },
   Comment:{
@@ -37,6 +38,10 @@ let API_ROUTES = {
   Stores:{
     root:'stores',
     GETALL:''
+  },
+  Payments:{
+    root:'payments',
+    PAY:''
   }
 }
 const controllersArr = Object.entries(API_ROUTES).map(

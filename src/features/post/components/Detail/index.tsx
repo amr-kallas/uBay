@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom'
 import queries from '../../api/queries'
-import Loading from './Loading'
 import ShowPost from './ShowPost'
 import { Box } from '@mui/material'
 
@@ -9,8 +8,8 @@ const PostDetails = () => {
   const { data, isLoading } = queries.Get(id)
   return (
     <Box mt={6}>
-      {isLoading && <Loading />}
-      {data && <ShowPost postDetails={data} />}
+      {isLoading && <ShowPost postDetails={undefined} skeleton={true} />}
+      {data && <ShowPost postDetails={data}  skeleton={undefined}/>}
     </Box>
   )
 }

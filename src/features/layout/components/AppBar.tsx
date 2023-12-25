@@ -15,7 +15,7 @@ const AppBar = () => {
         sx={{
           height: 54,
           bgcolor: 'white',
-          p: '8px 16px',
+          p: '8px 16px 0',
           alignItems: 'center',
           zIndex: 999,
           position: 'fixed',

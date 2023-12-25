@@ -1,7 +1,7 @@
 import { UseFormSetError } from 'react-hook-form'
 import { snackbar } from '../context/snackbarContext'
 type err = {
-  feedback: UseFormSetError<any>
+  feedback?: UseFormSetError<any>
   Err: any
   snackbar: (props: snackbar) => void
 }
@@ -11,6 +11,7 @@ const parseError = ({ feedback, Err,snackbar }: err) => {
     case 'form':
       data.errors.forEach((error: { path: any; message: string }) => {
         const message = error.message
+        if(feedback)
         feedback(`${error.path}`, { message })
       })
       break;

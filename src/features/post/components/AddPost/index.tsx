@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { addSchema, defaultValues } from './validation'
 import { z } from 'zod'
 import UploadImg from '../../../../components/input/UploadImg'
+import { useNavigate } from 'react-router-dom'
 
 const AddPost = () => {
   const {
@@ -23,9 +24,12 @@ const AddPost = () => {
   const category = queries.Categories()
   const store = queries.Stores()
   const add = queries.Add()
+  const navigate=useNavigate()
   const onSubmit = (data: AddPost) => {
     add.mutate(data, {
-      onSuccess: (d) => {console.log(d)},
+      onSuccess: (post) => {
+        navigate(`/posts/${post._id}`)
+      },
       onError: (error) => {
         console.log(error)
       },
@@ -82,7 +86,6 @@ const AddPost = () => {
           onRemove={onRemove}
           onUpload={onUpload}
           error={errors.photos}
-          // imgURL={[]}
         />
         <Submit
           sx={{

@@ -12,13 +12,13 @@ type UploadImg = {
   onUpload: (file: File[]) => void
   onRemove: () => void
   error: any
-  imgURL: string[]
+  imgURL?: string[]
 }
 const UploadImg = ({ onRemove, onUpload, error, imgURL }: UploadImg) => {
   const initialArray = typeof imgURL == 'string' ? [imgURL] : imgURL ?? []
   const [uploadFiles, setUploadFiles] = useState<string[]>(initialArray)
   useEffect(() => {
-    setUploadFiles(Array.isArray(imgURL) ? imgURL : [imgURL])
+    setUploadFiles(imgURL ? (Array.isArray(imgURL) ? imgURL : [imgURL]) : [])
   }, [imgURL])
   const handleFileChange = (e: any) => {
     const files: File[] = Array.from(e.target.files)
