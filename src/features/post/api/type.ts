@@ -30,7 +30,7 @@ export type AddPost = {
   price: number
   category: string
   store: string
-  photos: File[]
+  photos: File[] | string[]
 }
 export type EditPost = {
   id: string
@@ -86,7 +86,35 @@ export type Wait={
   },
   _id:string
 }
+export type Customer={
+  createdAt:string,
+  customer_date:string,
+  payment:{
+    is_discount:boolean,
+    price_after:number,
+    _id:string
+  },
+  product:Unpaid,
+  seller:User,
+  seller_date:string,
+  _id:string
+}
+export type Seller={
+  createdAt:string,
+  customer:User,
+  payment:{
+    is_discount:boolean,
+    price_after:number,
+    _id:string
+  },
+  product:Unpaid,
+  seller_date:string,
+  _id:string
+
+}
 export type Mine={
   unpaid:Unpaid[],
-  wait:Wait[]
+  wait:Wait[],
+  customer:Customer[],
+  seller:Seller[]
 }

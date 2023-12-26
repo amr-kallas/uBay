@@ -3,7 +3,15 @@ import axios from '../../../lib/axios'
 import { APIList } from '../../../type/api'
 import { paginateParams } from '../../../utils/apiHelpers'
 import objectToFormData from '../../../utils/objectToFormData'
-import { AddPost, Category, CategoryDetails, EditPost, Post, Store, StoreDetails } from './type'
+import {
+  AddPost,
+  Category,
+  CategoryDetails,
+  EditPost,
+  Post,
+  Store,
+  StoreDetails,
+} from './type'
 
 const API = {
   getAll: async (params: any) => {
@@ -16,12 +24,18 @@ const API = {
     const { data } = await axios.get(API_ROUTES.Post.GET(id))
     return data
   },
-  add: async (body:AddPost) => {
-    const { data } = await axios.post(API_ROUTES.Post.ADD_POST,objectToFormData(body))
+  add: async (body: AddPost) => {
+    const { data } = await axios.post(
+      API_ROUTES.Post.ADD_POST,
+      objectToFormData(body)
+    )
     return data
   },
-  edit: async ({id,...body}:EditPost) => {
-    const { data } = await axios.patch(API_ROUTES.Post.EDIT(id),objectToFormData(body))
+  edit: async ({ id, ...body }: EditPost) => {
+    const { data } = await axios.patch(
+      API_ROUTES.Post.EDIT(id),
+      objectToFormData(body)
+    )
     return data
   },
   delete: async (id: string) => {
@@ -37,22 +51,34 @@ const API = {
     return data
   },
   Categories: async () => {
-    const { data } = await axios.get<Category<CategoryDetails>>(API_ROUTES.Categories.GETALL)
+    const { data } = await axios.get<Category<CategoryDetails>>(
+      API_ROUTES.Categories.GETALL
+    )
     return data
   },
   Stores: async () => {
-    const { data } = await axios.get<Store<StoreDetails>>(API_ROUTES.Stores.GETALL)
+    const { data } = await axios.get<Store<StoreDetails>>(
+      API_ROUTES.Stores.GETALL
+    )
     return data
   },
-  Pay:async (body:any)=>{
-    const {data}=await axios.post(API_ROUTES.Payments.PAY,body)
+  Pay: async (body: any) => {
+    const { data } = await axios.post(API_ROUTES.Payments.PAY, body)
     return data
   },
-  Mine:async (isBuy:boolean)=>{
-    const {data}=await axios.get(API_ROUTES.Post.MINE,{
-      params:{isBuy}
+  Mine: async (isBuy: boolean) => {
+    const { data } = await axios.get(API_ROUTES.Post.MINE, {
+      params: { isBuy },
     })
     return data
-  }
+  },
+  Seller: async (product: string) => {
+    const { data } = await axios.post(API_ROUTES.Delivires.SELLER, {product})
+    return data
+  },
+  Customer: async (product: string) => {
+    const { data } = await axios.post(API_ROUTES.Delivires.CUSTOMER, {product})
+    return data
+  },
 }
 export default API

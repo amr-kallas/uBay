@@ -40,7 +40,10 @@ const queries = {
   Categories:()=>useQuery<Category<CategoryDetails>>(keys.Categories()),
   Stores:()=>useQuery<Store<StoreDetails>>(keys.Stores()),
   Pay: () => useMutation(API.Pay),
-  Mine:(isBuy:boolean) =>useQuery<Mine>(keys.Mine(isBuy))
+  Mine:(isBuy:boolean) =>useQuery<Mine>(keys.Mine(isBuy)),
+  Seller: () => useMutation(API.Seller),
+  Customer: () => useMutation(API.Customer)
+
 
 }
 export default queries

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   LinearProgress,
   MenuItem,
@@ -35,6 +35,7 @@ const EditPost = () => {
     defaultValues: isSuccess ? PostDetail(data) : defaultValues,
     resolver: zodResolver(addSchema),
   })
+  const navigate=useNavigate()
   useEffect(() => {
     if (data) reset(PostDetail(data))
   }, [data, reset])
@@ -44,7 +45,9 @@ const EditPost = () => {
     edit.mutate(
       { id, ...body },
       {
-        onSuccess: () => {},
+        onSuccess: () => {
+          navigate(`/posts/${data?._id}`)
+        },
         onError: (error) => {
           console.log(error)
         },
@@ -76,24 +79,24 @@ const EditPost = () => {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField control={control} name="title" label="Title" disabled={isLoading}/>
+        <TextField control={control} name="title" label="Title" disabled={!isSuccess}/>
         <TextField
           control={control}
           name="content"
           label="Content"
           multiline
           rows={3}
-          disabled={isLoading}
+          disabled={!isSuccess}
         />
-        <TextField control={control} name="price" type="number" label="Price" disabled={isLoading}/>
-        <Select disabled={isLoading} control={control} name="category">
+        <TextField control={control} name="price" type="number" label="Price" disabled={!isSuccess}/>
+        <Select disabled={!isSuccess} control={control} name="category">
           {category.data?.data.map((item: CategoryDetails) => (
             <MenuItem value={item._id} key={item._id}>
               {item.name}
             </MenuItem>
           ))}
         </Select>
-        <Select disabled={isLoading} control={control} name="store">
+        <Select disabled={!isSuccess} control={control} name="store">
           {store.data?.data.map((item: StoreDetails) => (
             <MenuItem value={item._id} key={item._id}>
               {item.name}

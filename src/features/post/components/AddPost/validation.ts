@@ -9,7 +9,7 @@ export const defaultValues:AddPost={
     price:0,
     category:'',
     store:'',
-    photos:[]
+    photos:[] 
 }
 
 export const addSchema:z.ZodType<AddPost>=z.object({
@@ -18,5 +18,5 @@ export const addSchema:z.ZodType<AddPost>=z.object({
     price:z.coerce.number().positive(),
     category:z.string().nonempty(),
     store:z.string().nonempty(),
-    photos:z.array(z.instanceof(File)).min(1)
+    photos:z.array(z.instanceof(File)).min(1).or(z.array(z.string()))
 })

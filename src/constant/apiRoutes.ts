@@ -42,6 +42,11 @@ let API_ROUTES = {
   Payments:{
     root:'payments',
     PAY:''
+  },
+  Delivires:{
+    root:'deliveries',
+    SELLER:'generateQrForSeller',
+    CUSTOMER:'generateQrForCustomer'
   }
 }
 const controllersArr = Object.entries(API_ROUTES).map(

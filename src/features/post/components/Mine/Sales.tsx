@@ -1,6 +1,6 @@
 import { Alert, Box, Chip, Paper, Stack, Typography } from '@mui/material'
-import queries from '../api/queries'
-import { Unpaid, Wait } from '../api/type'
+import queries from '../../api/queries'
+import { Unpaid, Wait } from '../../api/type'
 import Loading from './Loading'
 import { useNavigate } from 'react-router-dom'
 type Sales = {

@@ -115,7 +115,7 @@ const ShowPost = ({ postDetails }: PostCard) => {
                 mt={2}
                 sx={{
                   flexWrap: 'wrap',
-                  gap: '5px',
+                  gap: '1px',
                   '.MuiBox-root:first-of-type': {
                     flex: '1 100%',
                     height: '315px',

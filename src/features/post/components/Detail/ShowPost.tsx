@@ -264,7 +264,7 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
           flex: 1,
           ml: isMediumScreen ? 0 : '340px',
           flexWrap: 'wrap',
-          gap: '5px',
+          gap: '1px',
           height: 'calc(90vh - 56px)',
           mb: isSmallScreen ? 7 : 0,
           '.MuiBox-root:first-of-type': {

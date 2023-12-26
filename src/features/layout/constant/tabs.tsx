@@ -12,17 +12,17 @@ export const tabs = [
     },
     {
       value: 'transactions',
-      icon: <ForumIcon sx={{ width: 24, height: 30 }} />,
+      icon: <LocalGroceryStoreIcon sx={{ width: 24, height: 30 }} />,
       path: 'transactions',
     },
     {
       value: 'chats',
-      icon: <LocalGroceryStoreIcon sx={{ width: 24, height: 30 }} />,
+      icon: <ForumIcon sx={{ width: 24, height: 30 }} />,
       path: 'chats',
     },
     {
-      value: 'settings',
+      value: 'settings/account',
       icon: <Avatar src={person} sx={{ width: 30, height: 30 }} />,
-      path: 'settings',
+      path: 'settings/account',
     },
   ]

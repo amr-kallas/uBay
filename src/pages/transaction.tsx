@@ -2,7 +2,7 @@ import { Box, Tab, Tabs, useTheme } from '@mui/material'
 import { useState } from 'react'
 //@ts-expect-error nothing
 import SwipeableViews from 'react-swipeable-views'
-import {  Mine, Purchases, Sales } from '../features/post'
+import {  Mine} from '../features/post'
 import Storage from '../utils/Storage'
 type TabPanelProps = {
   children?: React.ReactNode
@@ -29,7 +29,7 @@ const Transaction = () => {
       <div hidden={value !== index}>
         {value === index && (
           <Box
-            sx={{ maxWidth: 525, m: 'auto', px: 1, mb: { xs: 9, sm: 'auto' } }}
+            sx={{ maxWidth: 575, m: 'auto', px: 1, mb: { xs: 9, sm: 'auto' } }}
           >
             {children}
           </Box>

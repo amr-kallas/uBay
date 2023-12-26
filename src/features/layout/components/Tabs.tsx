@@ -57,7 +57,7 @@ const Tabs = () => {
               svg: {
                 color: 'grey',
               },
-              ml: tab.value == 'settings' ? 'auto' : 'undefined',
+              ml: tab.value == 'settings/account' ? 'auto' : 'undefined',
             }}
             value={tab.value}
             icon={tab.icon}
