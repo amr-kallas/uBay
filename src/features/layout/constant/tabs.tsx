@@ -21,8 +21,8 @@ export const tabs = [
       path: 'chats',
     },
     {
-      value: 'settings/account',
+      value: 'settings',
       icon: <Avatar src={person} sx={{ width: 30, height: 30 }} />,
-      path: 'settings/account',
+      path: 'settings',
     },
   ]

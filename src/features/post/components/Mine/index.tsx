@@ -21,6 +21,7 @@ const Mine = ({ isBuy }: Mine) => {
     setProduct(product)
     setOpen(true)
   }
+
   return (
     <Box>
       {mine.isLoading && (
@@ -61,7 +62,9 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price} S.Y
+                      {post.product.price
+                        .toLocaleString()}{' '}
+                      S.Y
                     </Typography>{' '}
                   </Box>
                   <Stack
@@ -150,7 +153,9 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.price} S.Y
+                      {post.price
+                        .toLocaleString()}{' '}
+                      S.Y
                     </Typography>{' '}
                   </Box>
                   <Stack direction="row" spacing={1} mt={2}>
@@ -229,7 +234,9 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price} S.Y
+                      {post.product.price
+                        .toLocaleString()}{' '}
+                      S.Y
                     </Typography>{' '}
                   </Box>
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
@@ -327,7 +334,9 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price} S.Y
+                      {post.product.price
+                        .toLocaleString()}{' '}
+                      S.Y
                     </Typography>{' '}
                   </Box>
                   <Stack
@@ -406,7 +415,9 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price} S.Y
+                      {post.product.price
+                        .toLocaleString()}{' '}
+                      S.Y
                     </Typography>{' '}
                   </Box>
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>

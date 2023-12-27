@@ -32,7 +32,6 @@ const ProductQR = ({ open, setOpen, person, products }: ProductQR) => {
     payment: products?.payment._id,
   }
   const value = JSON.stringify(body)
-  console.log(value)
   useEffect(() => {
     if (open && person == 'seller') {
       const product = products!.product._id

@@ -3,7 +3,7 @@ import { InputAdornment } from '@mui/material'
 import TextField from '../../../components/input/TextField'
 import EmailIcon from '@mui/icons-material/Email'
 import { Control } from 'react-hook-form'
-const EmailInput = ({control}:{control:Control<any>}) => {
+const EmailInput = ({control,sx}:{control:Control<any>,sx:any}) => {
   return (
     <TextField
       control={control}
@@ -17,7 +17,8 @@ const EmailInput = ({control}:{control:Control<any>}) => {
         ),
       }}
       sx={{
-        width: '70%',
+        ...sx,
+        // width: '70%',
         m: '0 auto',
       }}
     />
