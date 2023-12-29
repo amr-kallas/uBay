@@ -15,6 +15,7 @@ import queries from '../../account/api/queries'
 const Tabs = () => {
   const location = useLocation().pathname.slice(1)
   const [value, setValue] = useState('home')
+  const navigate = useNavigate()
   const me = queries.GetMe()
 
   useEffect(() => {
@@ -30,7 +31,6 @@ const Tabs = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
-  const navigate = useNavigate()
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
@@ -60,17 +60,26 @@ const Tabs = () => {
               ml: tab.value == 'settings' ? 'auto' : 'undefined',
             }}
             value={tab.value}
-            icon={tab.icon}
+            icon={
+              tab.icon.props && tab.icon.props.src
+                ? {
+                    ...tab.icon,
+                    props: { ...tab.icon.props, src: me.data?.photo },
+                  }
+                : tab.icon
+            }
             onClick={() => navigate(tab.path)}
           />
         ))}
         <Tab value="none" sx={{ position: 'absolute', marginLeft: -9999 }} />
       </MuiTabs>
-      <IconButton sx={{ display: { xs: 'block', sm: 'none' }, ml: 'auto' }}>
+      <IconButton sx={{ display: { xs: 'block', sm: 'none' }, ml: 'auto' }} onClick={() => navigate('/settings')}>
         {me.isLoading ? (
           <Skeleton variant="circular" width={30} height={30} />
         ) : (
-          <Avatar src={me.data?.photo} sx={{ width: 30, height: 30 }} />
+          <Box >
+            <Avatar src={me.data?.photo} sx={{ width: 30, height: 30 }} />
+          </Box>
         )}
       </IconButton>
     </Box>

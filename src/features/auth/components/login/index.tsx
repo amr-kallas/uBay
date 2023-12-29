@@ -23,7 +23,7 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
     defaultValues: defaultValues,
   })
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const snackbar = useSnackbarContext()
   const theme = useTheme()
   const login = queries.Login()
@@ -73,19 +73,25 @@ const Login = () => {
               Login
             </Typography>
             <Stack gap={2} flex={2}>
-              <EmailInput control={control} />
+              <EmailInput control={control} sx={{ width: '80%' }} />
               <PasswordInput
                 control={control}
                 name="password"
                 label="Password"
                 key="Password"
+                sx={{ width: '80%' }}
               />
 
               <Submit
                 isLoading={login.isLoading}
                 variant="contained"
                 sx={{
-                  width: { xs: '70%', md: 'fit-content' },
+                  width: {
+                    xs: '70%',
+                    md: 'fit-content',
+                  },
+                  mx: 'auto !important',
+                  p:'8px 24px'
                 }}
               >
                 Login
@@ -97,7 +103,7 @@ const Login = () => {
                 Create an account now
               </Link>
             </Box>
-            <Divider sx={{ margin: '20px auto' }} />
+            <Divider sx={{ margin: '20px' }}/>
             <Box sx={{ m: '0 auto', textAlign: 'center' }} component="p">
               Forgot your password?{' '}
               <Link

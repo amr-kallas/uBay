@@ -10,7 +10,15 @@ import HomePage from './pages'
 import { AddPost, EditPost, Post, PostDetails } from './features/post'
 import Transaction from './pages/transaction'
 import Settings from './pages/settings'
-import { Edit, Personal } from './features/account'
+import {
+  ChangePassword,
+  Edit,
+  ForgotPassword,
+  Layout,
+  LogoutForm,
+  Personal,
+  Preferences,
+} from './features/account'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default createBrowserRouter(
@@ -29,11 +37,22 @@ export default createBrowserRouter(
           <Route path="posts/edit/:id" element={<EditPost />} />
           <Route path="posts/:id" element={<PostDetails />} />
           <Route path="/transactions" element={<Transaction />} />
-          <Route path="/settings">
-            <Route path="" element={<Settings />} />
-            <Route path="profile" element={<Personal />} />
-            <Route path="profile/edit" element={<Edit />} />
+          <Route path="/settings" element={<Settings />}>
+            <Route path="" element={<Layout />} />
+            <Route path="account" element={<Layout />} />
+            <Route path="logout" element={<LogoutForm />} />
+            <Route path="preferences" element={<Preferences />} />
           </Route>
+          <Route path="/settings/profile" element={<Personal />} />
+          <Route path="/settings/profile/edit" element={<Edit />} />
+          <Route
+            path="/settings/password-change"
+            element={<ChangePassword />}
+          />
+          <Route
+            path="/settings/password-forgot"
+            element={<ForgotPassword />}
+          />
         </Route>
       </Route>
     </Route>

@@ -1,7 +1,7 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory'
 import API from './api'
 import { useInfiniteQuery, useMutation, useQuery } from 'react-query'
-import { Category, CategoryDetails, Mine, Post, Store, StoreDetails } from './type'
+import {  Mine, Post, Store, StoreDetails } from './type'
 
 export const keys = createQueryKeys('product', {
   getAll: (params: any) => ({
@@ -14,10 +14,6 @@ export const keys = createQueryKeys('product', {
   get:(id:string)=>({
     queryFn:()=>API.get(id),
     queryKey:[id]
-  }),
-  Categories:()=>({
-    queryFn:API.Categories,
-    queryKey:['']
   }),
   Stores:()=>({
     queryFn:API.Stores,
@@ -37,7 +33,6 @@ const queries = {
   Delete: () => useMutation(API.delete),
   Like: () => useMutation(API.likePost),
   UnLike: () => useMutation(API.unLikePost),
-  Categories:()=>useQuery<Category<CategoryDetails>>(keys.Categories()),
   Stores:()=>useQuery<Store<StoreDetails>>(keys.Stores()),
   Pay: () => useMutation(API.Pay),
   Mine:(isBuy:boolean) =>useQuery<Mine>(keys.Mine(isBuy)),

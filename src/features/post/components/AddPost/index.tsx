@@ -3,13 +3,15 @@ import TextField from '../../../../components/input/TextField'
 import { useForm } from 'react-hook-form'
 import Select from '../../../../components/input/Select'
 import queries from '../../api/queries'
-import { AddPost, CategoryDetails, StoreDetails } from '../../api/type'
+import {queries as categoryQuery} from '../../../category/api/query'
+import { AddPost,  StoreDetails } from '../../api/type'
 import Submit from '../../../../components/button/Submit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { addSchema, defaultValues } from './validation'
 import { z } from 'zod'
 import UploadImg from '../../../../components/input/UploadImg'
 import { useNavigate } from 'react-router-dom'
+import { CategoryDetails } from '../../../category/api/type'
 
 const AddPost = () => {
   const {
@@ -21,7 +23,7 @@ const AddPost = () => {
     resolver: zodResolver(addSchema),
     defaultValues: defaultValues,
   })
-  const category = queries.Categories()
+  const category = categoryQuery.Categories()
   const store = queries.Stores()
   const add = queries.Add()
   const navigate=useNavigate()

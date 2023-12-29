@@ -5,6 +5,8 @@ import {
   ListSubheader,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { SecurityList } from '../constant/List'
+import { Link } from 'react-router-dom'
 const Security = () => {
   return (
     <List
@@ -24,16 +26,28 @@ const Security = () => {
         fontSize: 18,
         color: '#424242',
       },
+      '.MuiListItemButton-root:not(:last-child)':{
+        borderBottom: '1px solid #ddd'
+      }
     }}
   >
-    <ListItemButton sx={{ borderBottom: '1px solid #ddd' }}>
-      <ListItemText primary="Change password" />
-      <ArrowBackIcon />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemText primary="Forget My Password" />
-      <ArrowBackIcon />
-    </ListItemButton>
+    {SecurityList.map((item)=>(
+        <ListItemButton key={item.title} >
+        <Link
+          to={item.path}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            textDecoration: 'none',
+          }}
+        >
+          <ListItemText primary={item.title}/>
+          <ArrowBackIcon />
+        </Link>
+      </ListItemButton>
+      ))}
   </List>
   )
 }

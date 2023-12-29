@@ -20,7 +20,7 @@ type ProductQR = {
   products: Wait | undefined
 }
 const ProductQR = ({ open, setOpen, person, products }: ProductQR) => {
-  const snackbar=useSnackbarContext()
+  const snackbar = useSnackbarContext()
   const seller = queries.Seller()
   const customer = queries.Customer()
   const closeDrawer = () => {
@@ -40,18 +40,17 @@ const ProductQR = ({ open, setOpen, person, products }: ProductQR) => {
           console.log(d)
         },
         onError: (err) => {
-          parseError({Err:err,snackbar:snackbar})
+          parseError({ Err: err, snackbar: snackbar })
         },
       })
     } else if (open && person == 'purchese') {
-      customer.mutate(products!._id, {
+      customer.mutate(products!.product._id, {
         onSuccess: (d) => {
           console.log(d)
         },
         onError: (err) => {
           console.log(err)
-          parseError({Err:err,snackbar:snackbar})
-
+          parseError({ Err: err, snackbar: snackbar })
         },
       })
     }

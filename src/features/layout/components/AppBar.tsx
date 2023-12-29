@@ -31,6 +31,7 @@ const AppBar = () => {
           alignItems="center"
           height={1}
           flex={1.3}
+          mt={-1}
         >
           <Link to="/" style={{ height: '100%' }}>
             <img style={{ width: '30px', height: '100%' }} src={logo} alt="" />

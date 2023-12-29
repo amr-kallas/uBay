@@ -12,6 +12,9 @@ export const keys = createQueryKeys('users', {
 
 const queries = {
   GetMe: () => useQuery<User>(keys.getMe()),
-  UpdateMe:()=>useMutation(API.updateMe)
+  UpdateMe: () => useMutation(API.updateMe),
+  ChangePassword: () => useMutation(API.changePassword),
+  ForgotPassword: () => useMutation(API.forgotPassword),
+  Favorite: () => useMutation(API.favorite),
 }
 export default queries

@@ -10,8 +10,9 @@ type passwordProps = {
   label: string
   name: string
   control: Control<any>
+  sx?:any
 }
-const PasswordInput = ({ label, name, control }: passwordProps) => {
+const PasswordInput = ({ label, name, control,sx }: passwordProps) => {
   const [showPassword, setShowPassword] = useState(false)
   return (
     <TextField
@@ -32,7 +33,8 @@ const PasswordInput = ({ label, name, control }: passwordProps) => {
         ),
       }}
       sx={{
-        width: '70%',
+        // width: '70%',
+        ...sx,
         m: '0 auto',
       }}
     />

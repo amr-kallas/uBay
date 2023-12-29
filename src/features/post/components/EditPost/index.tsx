@@ -10,7 +10,8 @@ import TextField from '../../../../components/input/TextField'
 import { useForm } from 'react-hook-form'
 import Select from '../../../../components/input/Select'
 import queries from '../../api/queries'
-import { AddPost, CategoryDetails, StoreDetails } from '../../api/type'
+import {queries as categoryQuery} from '../../../category/api/query'
+import { AddPost, StoreDetails } from '../../api/type'
 import Submit from '../../../../components/button/Submit'
 import { zodResolver } from '@hookform/resolvers/zod'
 // import { addSchema, defaultValues } from './validation'
@@ -19,10 +20,11 @@ import UploadImg from '../../../../components/input/UploadImg'
 import { useEffect } from 'react'
 import { PostDetail } from './helpers'
 import { addSchema, defaultValues } from '../AddPost/validation'
+import { CategoryDetails } from '../../../category/api/type'
 const EditPost = () => {
   const { id } = useParams() as { id: string }
   const { data, isLoading, isSuccess } = queries.Get(id)
-  const category = queries.Categories()
+  const category = categoryQuery.Categories()
   const store = queries.Stores()
   const edit = queries.Edit()
   const {

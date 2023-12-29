@@ -5,6 +5,7 @@ import {
   ListSubheader,
 } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Link } from 'react-router-dom'
 const Logout = () => {
   return (
     <List
@@ -22,12 +23,23 @@ const Logout = () => {
           fontSize: 18,
           color: '#424242',
         },
-        mb:'24px !important'
+        mb: '24px !important',
       }}
     >
       <ListItemButton>
-        <ListItemText primary="Logout" />
-        <ArrowBackIcon />
+        <Link
+          to="/settings/logout"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            width: '100%',
+            textDecoration: 'none',
+          }}
+        >
+          <ListItemText primary="Logout" />
+          <ArrowBackIcon />
+        </Link>
       </ListItemButton>
     </List>
   )

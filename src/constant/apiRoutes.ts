@@ -5,48 +5,61 @@ let API_ROUTES = {
     LOGIN: 'login',
     FORGOT_PASSWORD: 'forgotPassword',
     RESET_PASSWORD: 'resetPassword',
+  },
+  Users: {
+    root: 'users',
+    ME: 'me',
     UPDATE_PASSWORD: 'updateMyPassword',
+    FORGOT_PASSWORD: 'forgotPassword',
+    FAVORITE:'favorites'
   },
-  Users:{
-    root:'users',
-    ME:'me'
+  Post: {
+    root: 'products',
+    GET_ALL: '',
+    ADD_POST: '',
+    GET: (id: string) => id,
+    EDIT: (id: string) => id,
+    DELETE: (id: string) => id,
+    LIKE: (id: string) => `${id}/likes`,
+    UNLIKE: (id: string) => `${id}/likes`,
+    COMMENTS: (id: string) => `${id}/comments`,
+    MINE: 'mine',
   },
-  Post:{
-    root:'products',
-    GET_ALL:'',
-    ADD_POST:'',
-    GET:(id:string)=>id,
-    EDIT:(id:string)=>id,
-    DELETE:(id:string)=>id,
-    LIKE:(id:string)=>`${id}/likes`,
-    UNLIKE:(id:string)=>`${id}/likes`,
-    COMMENTS:(id:string)=>`${id}/comments`,
-    MINE:'mine',
-    
+  Comment: {
+    root: 'comments',
+    ADD: '',
+    GET: (id: string) => id,
+    EDIT: (id: string) => id,
+    DELETE: (id: string) => id,
   },
-  Comment:{
-    root:'comments',
-    ADD:'',
-    GET:(id:string)=>id,
-    EDIT:(id:string)=>id,
-    DELETE:(id:string)=>id,
+  Categories: {
+    root: 'categories',
+    GETALL: '',
+    Add: '',
+    GET: (id: string) => id,
+    EDIT: (id: string) => id,
+    DELETE: (id: string) => id,
   },
-  Categories:{
-    root:'categories',
-    GETALL:''
+  Stores: {
+    root: 'stores',
+    GETALL: '',
   },
-  Stores:{
-    root:'stores',
-    GETALL:''
+  Payments: {
+    root: 'payments',
+    PAY: '',
   },
-  Payments:{
-    root:'payments',
-    PAY:''
+  Delivires: {
+    root: 'deliveries',
+    SELLER: 'generateQrForSeller',
+    CUSTOMER: 'generateQrForCustomer',
   },
-  Delivires:{
-    root:'deliveries',
-    SELLER:'generateQrForSeller',
-    CUSTOMER:'generateQrForCustomer'
+  Cities:{
+    root:'cities',
+    GETALL: '',
+    Add: '',
+    GET: (id: string) => id,
+    EDIT: (id: string) => id,
+    DELETE: (id: string) => id,
   }
 }
 const controllersArr = Object.entries(API_ROUTES).map(
@@ -54,8 +67,8 @@ const controllersArr = Object.entries(API_ROUTES).map(
     const routesArr = Object.entries(routes)
     const routesPrefixed = Object.fromEntries(
       routesArr.map(([routeKey, route]) => {
-        if (typeof route === "function") {
-          return [routeKey, (...params: any[]) => `${root}/${route(...params)}`];
+        if (typeof route === 'function') {
+          return [routeKey, (...params: any[]) => `${root}/${route(...params)}`]
         }
         return [routeKey, `${root}/${route}`]
       })

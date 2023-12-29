@@ -35,16 +35,7 @@ export type AddPost = {
 export type EditPost = {
   id: string
 } & AddPost
-export type CategoryDetails = {
-  _id: string
-  name: string
-  createdAt: Date
-  description: string
-}
-export type Category<T> = {
-  data: T[]
-  totalDataCount: number
-}
+
 export type StoreDetails = {
   _id: string
   name: string

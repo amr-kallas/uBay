@@ -5,8 +5,6 @@ import { paginateParams } from '../../../utils/apiHelpers'
 import objectToFormData from '../../../utils/objectToFormData'
 import {
   AddPost,
-  Category,
-  CategoryDetails,
   EditPost,
   Post,
   Store,
@@ -48,12 +46,6 @@ const API = {
   },
   unLikePost: async (id: string) => {
     const { data } = await axios.delete(API_ROUTES.Post.UNLIKE(id))
-    return data
-  },
-  Categories: async () => {
-    const { data } = await axios.get<Category<CategoryDetails>>(
-      API_ROUTES.Categories.GETALL
-    )
     return data
   },
   Stores: async () => {

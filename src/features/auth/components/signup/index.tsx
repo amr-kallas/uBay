@@ -26,7 +26,7 @@ const Signup = () => {
     defaultValues: defaultValues,
   })
   const snackbar = useSnackbarContext()
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const theme = useTheme()
   const sign = queries.Signup()
   const onSubmit = (data: signup) => {
@@ -80,30 +80,36 @@ const Signup = () => {
               m: 'auto',
             }}
           />
-          <EmailInput control={control} />
+          <EmailInput control={control} sx={{ width: '70%' }} />
           <PasswordInput
             control={control}
             name="password"
             label="Password"
             key="Password"
+            sx={{ width: '70%' }}
           />
           <PasswordInput
             control={control}
             name="confirmPassword"
             label="Confirm Password"
             key="Confirm Password"
+            sx={{ width: '70%' }}
           />
           <Submit
             isLoading={sign.isLoading}
             variant="contained"
             sx={{
               width: { xs: '70%', md: 'fit-content' },
+              mx:'auto !important'
             }}
           >
             Create Account
           </Submit>
           <Box sx={{ m: '30px auto 0', display: 'flex' }} component="span">
-            have an account? <Link to="/login" style={{color:theme.palette.primary[900]}}>Login</Link>
+            have an account?{' '}
+            <Link to="/login" style={{ color: theme.palette.primary[900] }}>
+              Login
+            </Link>
           </Box>
         </Stack>
       </Paper>

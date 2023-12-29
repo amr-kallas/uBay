@@ -1,11 +1,12 @@
-import { Box } from "@mui/material"
-import { Account } from "../features/account"
+import { Box } from '@mui/material'
+import { Account } from '../features/account'
+import { Outlet } from 'react-router-dom'
 
 const Settings = () => {
-   
   return (
     <Box mt={7}>
-    <Account/>
+      <Account />
+      <Outlet />
     </Box>
   )
 }
