@@ -48,6 +48,7 @@ const Messages = () => {
           sx={{
             bgcolor: 'white',
             p: 1,
+            mb:{xs:7,sm:0},
             fieldset: {
               border: '1px solid rgba(0, 0, 0, 0.23) !important',
               bgcolor: 'inherit !important',
