@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material'
+import { Stack, useTheme } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
 import TextField from './TextField'
 import { Control } from 'react-hook-form'
@@ -7,8 +7,10 @@ type Message = {
   control: Control<any>
   name: string
   isLoading: boolean
+  sx?: any
 }
-const MessageInput = ({ control, name, isLoading }: Message) => {
+const MessageInput = ({ control, name, isLoading, sx }: Message) => {
+  const theme = useTheme()
   return (
     <Stack
       component="form"
@@ -19,6 +21,7 @@ const MessageInput = ({ control, name, isLoading }: Message) => {
           height: 35,
         },
         width: 1,
+        ...sx,
       }}
     >
       <TextField
@@ -26,10 +29,16 @@ const MessageInput = ({ control, name, isLoading }: Message) => {
         name={name}
         sx={{
           flex: 1,
+          '& .MuiOutlinedInput-root': {
+            '&.Mui-focused fieldset': {
+              borderWidth: '1px !important',
+              borderColor:`${theme.palette.primary.main} !important`
+            },
+          },
           fieldset: {
             border: 'none',
             bgcolor: '#eee',
-            zIndex:-1
+            zIndex: -1,
           },
         }}
       />
@@ -43,8 +52,6 @@ const MessageInput = ({ control, name, isLoading }: Message) => {
           width: 20,
         }}
       />
-      {/* <SendIcon />
-      </LoadingButton> */}
     </Stack>
   )
 }

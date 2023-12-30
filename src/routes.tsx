@@ -19,6 +19,8 @@ import {
   Personal,
   Preferences,
 } from './features/account'
+import Chat from './pages/chat'
+import Conversation from './features/chat/components/Conversation'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default createBrowserRouter(
@@ -52,6 +54,14 @@ export default createBrowserRouter(
           <Route
             path="/settings/password-forgot"
             element={<ForgotPassword />}
+          />
+          <Route
+            path="/chats"
+            element={<Chat />}
+          />
+          <Route
+            path="/chats/:id"
+            element={<Conversation />}
           />
         </Route>
       </Route>
