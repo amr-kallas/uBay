@@ -24,6 +24,7 @@ type user = {
   onRemove?: () => void
 }
 const PostAction = ({ userId, postId, onRemove }: user) => {
+  console.log({userId})
   const navigate = useNavigate()
   const snackbar = useSnackbarContext()
   const deletePost = query.Delete()

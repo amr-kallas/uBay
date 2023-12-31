@@ -68,7 +68,7 @@ const controllersArr = Object.entries(API_ROUTES).map(
     const routesPrefixed = Object.fromEntries(
       routesArr.map(([routeKey, route]) => {
         if (typeof route === 'function') {
-          return [routeKey, (...params: any[]) => `${root}/${route(...params)}`]
+          return [routeKey, (...params: any[]) => `${root}/${route(params[0])}`]
         }
         return [routeKey, `${root}/${route}`]
       })
