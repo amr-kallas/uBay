@@ -70,7 +70,7 @@ const Login = () => {
                 isLoading={resetPassword.isLoading}
                 variant="contained"
                 sx={{
-                  width: '70%',
+                  m:'auto'
                 }}
               >
                 Send Reset Code
