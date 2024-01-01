@@ -4,6 +4,6 @@ import Storage from '../../utils/Storage'
 const Auth = () => {
   const token = Storage.getToken()
   if (token) return <Outlet />
-  return <Navigate to="/signup" />
+  return <Navigate to="/register" />
 }
 export default Auth
