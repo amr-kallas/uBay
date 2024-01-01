@@ -3,8 +3,8 @@ import WalletIcon from '@mui/icons-material/Wallet'
 import { Paper, Stack, Typography } from '@mui/material'
 import Skeleton from '../../../../components/feedback/Skeleton'
 type Wallet = {
-  available: number 
-  standing: number 
+  available: number
+  standing: number
   loading: boolean
 }
 const Wallet = ({ available, standing, loading }: Wallet) => {
@@ -14,6 +14,7 @@ const Wallet = ({ available, standing, loading }: Wallet) => {
         maxWidth: '600px',
         margin: 'auto',
         marginTop: '30px',
+        marginBottom: { xs: '78px', sm: 'auto' },
         padding: '16px',
         borderRadius: '12px',
       }}

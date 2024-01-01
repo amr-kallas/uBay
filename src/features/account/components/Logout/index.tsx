@@ -23,7 +23,7 @@ const Logout = () => {
           fontSize: 18,
           color: '#424242',
         },
-        mb: '24px !important',
+        mb: {xs:'78px',sm:'24px !important'},
       }}
     >
       <ListItemButton>
