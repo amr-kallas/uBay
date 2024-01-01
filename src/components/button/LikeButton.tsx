@@ -16,10 +16,10 @@ const LikeButton = ({ postId, liked }: LikdedButton) => {
   const queryClient = useQueryClient()
   const handleClick = () => {
     queryClient.setQueriesData(keys.getAll._def, (oldData: any) => {
+      if (!oldData) {
+        return;
+      }
       const newPages = oldData.pages.map((page: APIList<Post>) => {
-        if (!oldData) {
-          return;
-        }
         const newData = page.data.map((post: Post) => {
           if (post._id == postId) {
             return {
