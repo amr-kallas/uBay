@@ -7,7 +7,7 @@ const AddButton = () => {
     <HideOnScroll direction="up" active={true}>
       <Fab
         color="primary"
-        sx={{ svg: { color: 'white' }, position: 'fixed', bottom: 15, left: 15 }}
+        sx={{ svg: { color: 'white' }, position: 'fixed', bottom: {xs:55,sm:15}, left: 15 }}
       >
         <AddIcon />
       </Fab>

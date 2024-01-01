@@ -64,7 +64,7 @@ const Login = () => {
             <Typography sx={{ textAlign: 'center', mb: 6 }}>
               A code will be sent to your email
             </Typography>
-            <Stack gap={2} flex={2}>
+            <Stack gap={2} flex={{xs:0,md:2}}>
               <EmailInput control={control} />
               <Submit
                 isLoading={resetPassword.isLoading}

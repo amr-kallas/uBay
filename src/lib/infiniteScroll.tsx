@@ -9,17 +9,22 @@ const InfiniteScroll = ({ children, query }: infinite) => {
   const { hasNextPage, data, fetchNextPage } = query
   return (
     <Infinite
-      dataLength={data?.pages.length??0}
+      dataLength={data?.pages.length ?? 0}
       next={fetchNextPage}
       hasMore={hasNextPage ?? false}
       loader={
         <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="50px"
-          position="relative"
-          top="-50px"
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '50px',
+            position: 'relative',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            overflow: 'hidden',
+            bottom: { xs: 56, sm: 0 },
+          }}
         >
           <CircularProgress />
         </Box>

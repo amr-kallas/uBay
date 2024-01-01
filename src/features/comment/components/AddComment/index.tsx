@@ -23,11 +23,11 @@ const AddComment = ({ PostID }: { PostID: string }) => {
         onSuccess: (data) => {
           queryClient.setQueriesData(keys.getAll._def, (oldData: any) => {
             if (!oldData) {
-              return;
+              return
             }
             console.log(oldData)
             const newPages = oldData.pages.map((page: any) => {
-              if (page.data[0].product == PostID) {
+              if (page.data && page.data[0] && page.data[0].product == PostID) {
                 return { ...page, data: [data, ...page.data] }
               }
               return page
