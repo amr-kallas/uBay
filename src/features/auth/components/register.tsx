@@ -29,12 +29,11 @@ const Register = () => {
           sx={{
             maxWidth: { xs: 1, sm: 670 },
             width: 1,
-            bgcolor: "white",
             borderRadius: "12px",
             display: "flex",
             m: "auto",
             flexDirection: { xs: "column", sm: "row" },
-            height: { xs: "100vh", sm: 1 },
+            height: { xs: "100vh", sm: 'auto' },
           }}
         >
           <Box
@@ -66,7 +65,7 @@ const Register = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h4" sx={{ display: "flex" }}>
+              <Typography variant="h4" sx={{ display: "flex",alignItems:'center' }}>
                 u
                 <Typography
                   variant="body1"

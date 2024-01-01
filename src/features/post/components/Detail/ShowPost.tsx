@@ -283,22 +283,6 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
               height: '100%',
             },
           },
-          // '.MuiBox-root:last-of-type': {
-          //   position: 'relative',
-          //   ':before': {
-          //     content: `"+${postDetails.photos.length - 3}"`,
-          //     position: 'absolute',
-          //     width: '100%',
-          //     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-          //     height: '100%',
-          //     textAlign: 'center',
-          //     justifyContent: 'center',
-          //     alignItems: 'center',
-          //     color: 'white',
-          //     fontSize: '2rem',
-          //     display: postDetails.photos.length > 3 ? 'flex' : 'none',
-          //   },
-          // },
         }}
       >
         {postDetails && (
@@ -389,9 +373,10 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
               <Skeleton
                 variant="text"
                 sx={{
-                  width: '49.5% !important',
+                  width: '49.8% !important',
                   height: isMediumScreen ? '150px' : '100% !important',
                   transform: 'none',
+                  borderRadius:'none'
                 }}
               />
               <Skeleton

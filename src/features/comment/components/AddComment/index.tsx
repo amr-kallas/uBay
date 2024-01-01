@@ -22,6 +22,9 @@ const AddComment = ({ PostID }: { PostID: string }) => {
       add.mutate(body, {
         onSuccess: (data) => {
           queryClient.setQueriesData(keys.getAll._def, (oldData: any) => {
+            if (!oldData) {
+              return;
+            }
             console.log(oldData)
             const newPages = oldData.pages.map((page: any) => {
               if (page.data[0].product == PostID) {

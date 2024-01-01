@@ -17,6 +17,9 @@ const LikeButton = ({ postId, liked }: LikdedButton) => {
   const handleClick = () => {
     queryClient.setQueriesData(keys.getAll._def, (oldData: any) => {
       const newPages = oldData.pages.map((page: APIList<Post>) => {
+        if (!oldData) {
+          return;
+        }
         const newData = page.data.map((post: Post) => {
           if (post._id == postId) {
             return {
@@ -31,8 +34,8 @@ const LikeButton = ({ postId, liked }: LikdedButton) => {
       })
       return { ...oldData, pages: newPages }
     })
-    queryClient.setQueryData(keys.get(postId).queryKey, (post:any) => {
-      if(!post) return undefined;
+    queryClient.setQueryData(keys.get(postId).queryKey, (post: any) => {
+      if (!post) return;
       return {
         ...post,
         likedByMe: !post.likedByMe,
