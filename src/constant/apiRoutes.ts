@@ -11,7 +11,7 @@ let API_ROUTES = {
     ME: 'me',
     UPDATE_PASSWORD: 'updateMyPassword',
     FORGOT_PASSWORD: 'forgotPassword',
-    FAVORITE:'favorites'
+    FAVORITE: 'favorites',
   },
   Post: {
     root: 'products',
@@ -53,14 +53,30 @@ let API_ROUTES = {
     SELLER: 'generateQrForSeller',
     CUSTOMER: 'generateQrForCustomer',
   },
-  Cities:{
-    root:'cities',
+  Cities: {
+    root: 'cities',
     GETALL: '',
     Add: '',
     GET: (id: string) => id,
     EDIT: (id: string) => id,
     DELETE: (id: string) => id,
-  }
+  },
+  Chat: {
+    root: 'chats',
+    GETALL: '',
+    Add: '',
+    GET: (id: string) => id,
+    EDIT: (id: string) => id,
+    DELETE: (id: string) => id,
+  },
+  Message: {
+    root: 'chats',
+    GETALL: (chatId: string) => `${chatId}/messages`,
+    Add: (chatId: string) => `${chatId}/messages`,
+    Get: (chatId: string, id: string) => `${chatId}/messages/${id}`,
+    EDIT: (chatId: string, id: string) => `${chatId}/messages/${id}`,
+    DELETE: (chatId: string, id: string) => `${chatId}/messages/${id}`,
+  },
 }
 const controllersArr = Object.entries(API_ROUTES).map(
   ([controllerKey, { root, ...routes }]) => {

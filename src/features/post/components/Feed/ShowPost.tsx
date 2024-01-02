@@ -20,24 +20,47 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 import { usePostIdContext } from '../../../../context/postIdContext'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { queries as chatQuery } from '../../../chat/api/queries'
+import Submit from '../../../../components/button/Submit'
 type PostCard = {
   postDetails: Post
 }
 
 const ShowPost = ({ postDetails }: PostCard) => {
+  const chat = chatQuery.Add()
   const { setId } = usePostIdContext()
-  const [open,setOpen]=useState(true)
+  const [open, setOpen] = useState(true)
   const isMe = queries.GetMe()
-  const navigate=useNavigate()
-  const onRemove=()=>{
+  const navigate = useNavigate()
+  const onRemove = () => {
     setOpen(false)
   }
-  const DetailPost=()=>{
+  const DetailPost = () => {
     navigate(`/posts/${postDetails._id}`)
   }
+  const handleCreateChat = () => {
+    const body = {
+      name: 'sender',
+      product: postDetails._id,
+      user: postDetails.user._id,
+    }
+    chat.mutate(body, {
+      onSuccess(data) {
+        navigate(data?.chat ? `/chats/${data.chat.id}` : `/chats/${data.data.id}`)
+      },
+      onError: (err) => {
+        console.log(err)
+      },
+    })
+  }
   return (
-    <Slide in={open} appear={false} unmountOnExit direction='right' timeout={500}>
+    <Slide
+      in={open}
+      appear={false}
+      unmountOnExit
+      direction="right"
+      timeout={500}
+    >
       <Box>
         <Stack key={postDetails._id}>
           <Paper
@@ -89,10 +112,8 @@ const ShowPost = ({ postDetails }: PostCard) => {
                   >
                     <Timeago date={postDetails.createdAt} />
                     {'\u00A0'}
-                   | <LocationOnIcon sx={{fontSize:10,color:'grey'}}/>
-                    {`${postDetails.store.name} - ${
-                      postDetails.store.city.name
-                    }`}
+                    | <LocationOnIcon sx={{ fontSize: 10, color: 'grey' }} />
+                    {`${postDetails.store.name} - ${postDetails.store.city.name}`}
                   </Typography>
                 </Box>
               </Stack>
@@ -104,7 +125,7 @@ const ShowPost = ({ postDetails }: PostCard) => {
                 />
               </Box>
             </Stack>
-            <Box mb={1} sx={{cursor:'pointer'}} onClick={DetailPost}>
+            <Box mb={1} sx={{ cursor: 'pointer' }} onClick={DetailPost}>
               <Box p={'0 16px'}>
                 <Typography variant="h6">{postDetails.title}</Typography>
                 <Typography variant="body1">{postDetails.content}</Typography>
@@ -198,16 +219,27 @@ const ShowPost = ({ postDetails }: PostCard) => {
                 <ChatBubbleIcon />
               </Button>
               {postDetails.user._id != isMe.data?._id && (
-                <Button
+                <Submit
                   sx={{
                     flex: 1,
                     textAlign: 'center',
                     cursor: 'pointer',
                     p: '8px 0',
+                    background: 'white',
+                    boxShadow: 'none',
+                    ':hover': {
+                      background: 'rgba(109, 40, 217, 0.04)',
+                      boxShadow: 'none',
+                    },
+                    '&.Mui-disabled': {
+                      background: 'none',
+                    },
                   }}
+                  isLoading={chat.isLoading}
+                  onClick={handleCreateChat}
                 >
-                  <TelegramIcon />
-                </Button>
+                  {!chat.isLoading && <TelegramIcon />}
+                </Submit>
               )}
             </Stack>
           </Paper>

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import SwipeableViews from 'react-swipeable-views'
 import Purchases from './Purchases'
 import Sales from './Sales'
+import Storage from '../../../utils/Storage'
 type TabPanelProps = {
   children?: React.ReactNode
   dir?: string
@@ -11,10 +12,13 @@ type TabPanelProps = {
   value: number
 }
 const Tabs = () => {
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState(
+    Number(Storage.getChatTab() as unknown as number) ?? 0
+  )
   const theme = useTheme()
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
+    Storage.setChatTab(newValue as unknown as string)
   }
   const handleChangeIndex = (index: number) => {
     setValue(index)
@@ -31,7 +35,6 @@ const Tabs = () => {
   return (
     <Box
       sx={{
-        
         borderRight: '1px solid #eee',
         bgcolor: 'white',
         flex: 1.3,
@@ -59,7 +62,11 @@ const Tabs = () => {
         index={value}
         onChangeIndex={handleChangeIndex}
         enableMouseEvents
-        style={{ minHeight: '100vh',maxWidth: { xs: 600, md: 'auto' },m:'auto' }}
+        style={{
+          minHeight: '100vh',
+          maxWidth: { xs: 600, md: 'auto' },
+          m: 'auto',
+        }}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Purchases />

@@ -16,5 +16,11 @@ const Storage = {
   getTransaction: () => {
     return localStorage.getItem('transaction')
   },
+  setChatTab: (index: string) => {
+    localStorage.setItem('chat', index)
+  },
+  getChatTab: () => {
+    return localStorage.getItem('chat')
+  },
 }
 export default Storage
