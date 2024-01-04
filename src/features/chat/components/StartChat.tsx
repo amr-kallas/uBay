@@ -4,7 +4,6 @@ const StartChat = () => {
   return (
     <Box
       sx={{
-        mt: 7,
         flex: 3,
         bgcolor: 'white',
       }}

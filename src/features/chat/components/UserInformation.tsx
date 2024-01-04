@@ -4,12 +4,19 @@ import { Link, useParams } from 'react-router-dom'
 import { queries as chatQuery } from '../api/queries'
 import queries from '../../account/api/queries'
 import Skeleton from '../../../components/feedback/Skeleton'
-const UserInformation = () => {
+import { useEffect } from 'react'
+type UserInformation = {
+  isMeSeller: (isMe: boolean, product: any) => void
+}
+const UserInformation = ({ isMeSeller }: UserInformation) => {
   const { id } = useParams()
   const chat = chatQuery.GetChat(id as string)
   const me = queries.GetMe()
   const isLoading = me.isLoading || chat.isLoading
   const iAmSeller = chat.data?.seller._id == me.data?._id
+  useEffect(() => {
+    isMeSeller(iAmSeller, chat.data)
+  }, [chat.data, iAmSeller, isMeSeller])
   return (
     <Stack
       direction="row"
@@ -49,6 +56,11 @@ const UserInformation = () => {
           </>
         )}
       </Stack>
+      {/* {iAmSeller && (
+        <IconButton sx={{ ml: 'auto !important' }} onClick={handleOpen}>
+          <DiscountIcon sx={{ color: '#be185d' }} />
+        </IconButton>
+      )} */}
     </Stack>
   )
 }

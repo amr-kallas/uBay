@@ -43,9 +43,7 @@ const Tabs = () => {
       <MuiTabs
         value={value}
         onChange={handleChange}
-        sx={{
-          mt: 7,
-        }}
+       
       >
         <Tab
           sx={{
@@ -63,7 +61,6 @@ const Tabs = () => {
         onChangeIndex={handleChangeIndex}
         enableMouseEvents
         style={{
-          minHeight: '100vh',
           maxWidth: { xs: 600, md: 'auto' },
           m: 'auto',
         }}

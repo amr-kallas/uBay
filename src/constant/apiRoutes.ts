@@ -23,6 +23,7 @@ let API_ROUTES = {
     LIKE: (id: string) => `${id}/likes`,
     UNLIKE: (id: string) => `${id}/likes`,
     COMMENTS: (id: string) => `${id}/comments`,
+    COUPONS:(id: string) => `${id}/coupons`,
     MINE: 'mine',
   },
   Comment: {
@@ -77,6 +78,15 @@ let API_ROUTES = {
     EDIT: (chatId: string, id: string) => `${chatId}/messages/${id}`,
     DELETE: (chatId: string, id: string) => `${chatId}/messages/${id}`,
   },
+  Coupons:{
+    root:'coupons',
+    MY:'/myCoupons',
+    Add: '',
+    GET: (id: string) => id,
+    EDIT: (id: string) => id,
+    DELETE: (id: string) => id,
+
+  }
 }
 const controllersArr = Object.entries(API_ROUTES).map(
   ([controllerKey, { root, ...routes }]) => {

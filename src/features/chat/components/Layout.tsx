@@ -9,8 +9,8 @@ const Layout = () => {
     <Stack
       direction="row"
       sx={{
-        height: '100vh',
-        overflow: 'hidden',
+        height: 'calc(100vh - 56px)',
+        mt: 7,
       }}
     >
       <Tabs />

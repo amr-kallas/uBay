@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 import { keys, queries as messageQuery } from '../api/queries'
 import queries from '../../account/api/queries'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { io } from 'socket.io-client'
 import { API_BASE } from '../../../constant/domain'
 import { useQueryClient } from 'react-query'
@@ -21,6 +21,7 @@ const Messages = () => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: { message: '' },
   })
+  const messagesEndRef = useRef<any>(null)
   const theme = useTheme()
   const { id = '' } = useParams<string>()
   const messages = messageQuery.Messages(id as string)
@@ -66,6 +67,7 @@ const Messages = () => {
           socket.emit('new message', { chatId: id, message: data })
           queryClient.invalidateQueries(keys.getAllMessage._def)
           reset({ message: '' })
+          messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
         },
         onError: (err) => {
           console.log(err)
@@ -116,6 +118,7 @@ const Messages = () => {
             <React.Fragment key={message._id}>
               {message.user == data?._id && (
                 <Box
+                  ref={messagesEndRef}
                   sx={{
                     bgcolor: theme.palette.primary.main,
                     maxWidth: 330,
@@ -201,6 +204,7 @@ const Messages = () => {
           }}
         />
       </Box>
+      <div ref={messagesEndRef} />
     </Box>
   )
 }

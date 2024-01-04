@@ -20,9 +20,9 @@ const Snackbar = ({
         onClose={handleClose}
         autoHideDuration={3000}
       >
-      <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-        {message}
-      </Alert>
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
       </MuiSnackbar>
     </>
   )

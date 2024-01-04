@@ -23,12 +23,17 @@ import { usePostIdContext } from '../../../../context/postIdContext'
 import { DrawerComment } from '../../../comment'
 import Skeleton from '../../../../components/feedback/Skeleton'
 import { useState } from 'react'
+import DiscountIcon from '@mui/icons-material/Discount'
 //@ts-expect-error nothing
 import Modal from 'react-modal'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import Buy from './Buy'
+import { DrawerDiscount } from '../../../discount'
+import Submit from '../../../../components/button/Submit'
+import { queries as chatQuery } from '../../../chat/api/queries'
+import { useNavigate } from 'react-router-dom'
 type Details =
   | {
       postDetails: Post
@@ -41,19 +46,26 @@ type Details =
 const ShowPost = ({ postDetails, skeleton }: Details) => {
   Modal.setAppElement('#root')
   const isMe = queries.GetMe()
+  const chat = chatQuery.Add()
+  const navigate = useNavigate()
   const { setId } = usePostIdContext()
   const theme = useTheme()
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [open, setOpen] = useState(false)
+  const [openDiscount, setOpenDiscount] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const openModal = (index: number) => {
     setCurrentImageIndex(index)
     setModalIsOpen(true)
   }
+  const Me = isMe.data?._id == postDetails?.user._id
   const openDrawer = () => {
-    isMe.data?._id !== postDetails?.user._id && setOpen(true)
+    !Me && setOpen(true)
+  }
+  const openDrawerDiscount = () => {
+    setOpenDiscount(true)
   }
   const nextImage = () => {
     setCurrentImageIndex((currentImageIndex + 1) % postDetails!.photos.length)
@@ -69,7 +81,23 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
   const closeModal = () => {
     setModalIsOpen(false)
   }
-
+  const handleCreateChat = () => {
+    const body = {
+      name: 'sender',
+      product: postDetails!._id,
+      user: postDetails!.user._id,
+    }
+    chat.mutate(body, {
+      onSuccess(data) {
+        navigate(
+          data?.chat ? `/chats/${data.chat.id}` : `/chats/${data.data.id}`
+        )
+      },
+      onError: (err) => {
+        console.log(err)
+      },
+    })
+  }
   return (
     <Stack direction={isMediumScreen ? 'column' : 'row'}>
       <Stack
@@ -196,17 +224,28 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
             >
               <ChatBubbleIcon />
             </Button>
-            {postDetails?.user._id != isMe.data?._id && (
-              <Button
+            {!Me && (
+              <Submit
                 sx={{
                   flex: 1,
                   textAlign: 'center',
                   cursor: 'pointer',
                   p: '8px 0',
+                  background: 'white',
+                  boxShadow: 'none',
+                  ':hover': {
+                    background: 'rgba(109, 40, 217, 0.04)',
+                    boxShadow: 'none',
+                  },
+                  '&.Mui-disabled': {
+                    background: 'none',
+                  },
                 }}
+                isLoading={chat.isLoading}
+                onClick={handleCreateChat}
               >
-                <TelegramIcon />
-              </Button>
+                {!chat.isLoading && <TelegramIcon />}
+              </Submit>
             )}
           </Stack>
         )}
@@ -229,13 +268,37 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
         <Box
           sx={{
             mt: 'auto',
-            textAlign: 'right',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 1,
             borderTop: isMediumScreen ? 'unset' : '1px solid #ddd',
             pt: 1,
             pb: isMediumScreen ? 1 : 0,
-            pr: 2,
+            px: 2,
           }}
         >
+          {Me && (
+            <Button
+              sx={{
+                bgcolor: theme.palette.primary.main,
+                color: 'white',
+                justifyContent: 'space-around',
+                minWidth: 100,
+                '&:hover': {
+                  bgcolor: theme.palette.primary.main,
+                },
+              }}
+              onClick={openDrawerDiscount}
+            >
+              <DiscountIcon sx={{ color: 'white', mr: 1 }} />
+              {postDetails && (
+                <Typography variant="body1">View Discounts</Typography>
+              )}
+              {skeleton && <Skeleton widthRange={{ min: 20, max: 40 }} />}
+            </Button>
+          )}
           <Button
             sx={{
               bgcolor: theme.palette.primary.main,
@@ -265,7 +328,7 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
           ml: isMediumScreen ? 0 : '340px',
           flexWrap: 'wrap',
           gap: '1px',
-          height: 'calc(90vh - 56px)',
+          height: 'calc(97vh - 56px)',
           mb: isSmallScreen ? 7 : 0,
           '.MuiBox-root:first-of-type': {
             flex: '1 100%',
@@ -376,15 +439,16 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
                   width: '49.8% !important',
                   height: isMediumScreen ? '150px' : '100% !important',
                   transform: 'none',
-                  borderRadius:'none'
+                  borderRadius: 'unset',
                 }}
               />
               <Skeleton
                 variant="text"
                 sx={{
-                  width: '49.5% !important',
+                  width: '49.8% !important',
                   height: isMediumScreen ? '150px' : '100% !important',
                   transform: 'none',
+                  borderRadius: 'unset',
                 }}
               />
             </Box>
@@ -397,6 +461,11 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
         setOpen={setOpen}
         price={postDetails?.price}
         id={postDetails?._id}
+      />
+      <DrawerDiscount
+        open={openDiscount}
+        setOpen={setOpenDiscount}
+        id={postDetails?._id ?? ''}
       />
     </Stack>
   )
