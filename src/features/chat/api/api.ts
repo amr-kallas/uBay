@@ -38,8 +38,8 @@ const API = {
     )
     return data
   },
-  AddMessage: async ({ chatId, ...body }: AddMessage) => {
-    const { data } = await axios.post(API_ROUTES.Message.Add(chatId), body)
+  AddMessage: async ({ ...body }: AddMessage) => {
+    const { data } = await axios.post(API_ROUTES.Message.Add(body.chatId), body)
     return data
   },
   GetMessage: async ({ chatId, id }: MessageAPIType) => {
@@ -48,9 +48,9 @@ const API = {
     )
     return data
   },
-  EditMessage: async ({ chatId, id, ...body }: EditMessage) => {
+  EditMessage: async ({  id, ...body }: EditMessage) => {
     const { data } = await axios.patch(
-      API_ROUTES.Message.EDIT(chatId, id),
+      API_ROUTES.Message.EDIT(body.chatId, id),
       body
     )
     return data

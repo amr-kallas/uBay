@@ -8,25 +8,76 @@ import {
 import MessageInput from '../../../components/input/messageInput'
 import { useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-import { queries as messageQuery } from '../api/queries'
+import { keys, queries as messageQuery } from '../api/queries'
 import queries from '../../account/api/queries'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { io } from 'socket.io-client'
+import { API_BASE } from '../../../constant/domain'
+import { useQueryClient } from 'react-query'
+import { Message } from '../api/type'
+const socket = io(API_BASE)
 
 const Messages = () => {
-  const { control } = useForm()
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: { message: '' },
+  })
   const theme = useTheme()
-  const { id } = useParams()
+  const { id = '' } = useParams<string>()
   const messages = messageQuery.Messages(id as string)
-  const me = queries.GetMe()
-  const isLoading = messages.isLoading || me.isLoading
+  const addMessage = messageQuery.AddMessage()
+  const { data, isLoading } = queries.GetMe()
+  const queryClient = useQueryClient()
+  const isLoadingMessage = messages.isLoading || isLoading
+  const isEmpty = messages.isSuccess && messages.data?.data.length == 0
   const reversedMessages = messages.isSuccess
     ? [...messages.data.data].reverse()
     : []
+  useEffect(() => {
+    if (data) socket.emit('setup', data)
+  }, [data])
+  useEffect(() => {
+    socket.emit('join chat', id)
+    reset({ message: '' })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+  useEffect(() => {
+    const listener = ({
+      newMessageReceived,
+    }: {
+      newMessageReceived: Message
+    }) => {
+      queryClient.setQueriesData(keys.getAllMessage._def, (oldData: any) => {
+        if (!oldData) return
+        const newData = [newMessageReceived, ...oldData.data]
+        return { ...oldData, data: newData }
+      })
+    }
+    socket.on('message received', listener)
+    return () => {
+      socket.off('message received')
+    }
+  }, [queryClient])
+  const onSubmit = ({ message }: { message: string }) => {
+    if (message.trim().length == 0) return
+    addMessage.mutate(
+      { chatId: id, user: data!._id, content: message },
+      {
+        onSuccess: (data) => {
+          socket.emit('new message', { chatId: id, message: data })
+          queryClient.invalidateQueries(keys.getAllMessage._def)
+          reset({ message: '' })
+        },
+        onError: (err) => {
+          console.log(err)
+        },
+      }
+    )
+  }
   return (
     <Box
       sx={{
         flex: 1,
-        overflowY:'auto'
+        overflowY: 'auto',
       }}
     >
       <Stack
@@ -34,21 +85,36 @@ const Messages = () => {
           minHeight: { xs: 'calc(100% - 107px)', sm: 'calc(100% - 52px)' },
         }}
       >
-        {isLoading && (
+        {isEmpty && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              flex: 1,
+              alignItems: 'center',
+            }}
+          >
+            <Typography variant="h4" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+              There are no messages yet...
+            </Typography>
+          </Box>
+        )}
+        {isLoadingMessage && (
           <Box
             sx={{
               display: 'flex',
               justifyContent: 'center',
               mt: 5,
+              alignItems: 'center',
             }}
           >
             <CircularProgress />
           </Box>
         )}
-        {!isLoading &&
+        {!isLoadingMessage &&
           reversedMessages.map((message) => (
             <React.Fragment key={message._id}>
-              {message.user == me.data?._id && (
+              {message.user == data?._id && (
                 <Box
                   sx={{
                     bgcolor: theme.palette.primary.main,
@@ -77,7 +143,7 @@ const Messages = () => {
                   </Typography>
                 </Box>
               )}
-              {message.user != me.data?._id && (
+              {message.user != data?._id && (
                 <Box ml="auto">
                   <Box
                     sx={{
@@ -112,6 +178,7 @@ const Messages = () => {
           ))}
       </Stack>
       <Box
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           position: 'sticky',
           bottom: { xs: 56, sm: 0 },
@@ -121,7 +188,7 @@ const Messages = () => {
         <MessageInput
           control={control}
           name="message"
-          isLoading={false}
+          isLoading={addMessage.isLoading}
           sx={{
             bgcolor: 'white',
             p: 1,

@@ -45,7 +45,6 @@ export type Chat = {
 export type AddMessage = {
   content: string
   user: string
-  chat: string
   chatId: string
 }
 export type EditMessage = {
@@ -62,7 +61,6 @@ export type Messages<T> = {
 export type Message = {
   content: string
   createdAt: string
-  id: string
   user: string
   _id: string
 }
