@@ -377,7 +377,7 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
             >
               <img
                 src={postDetails.photos[currentImageIndex]}
-                style={{ display: 'flex', margin: 'auto' }}
+                style={{ display: 'flex', margin: 'auto',width:'100%',height:'100%',objectFit:'contain' }}
               />
               <IconButton
                 sx={{

@@ -41,7 +41,7 @@ export default createBrowserRouter(
           <Route path="posts/:id" element={<PostDetails />} />
           <Route path="/transactions" element={<Transaction />} />
           <Route path="/settings" element={<Settings />}>
-            <Route element={<Layout />} />
+            <Route path="" element={<Layout />} />
             <Route path="account" element={<Layout />} />
             <Route path="logout" element={<LogoutForm />} />
             <Route path="preferences" element={<Preferences />} />
