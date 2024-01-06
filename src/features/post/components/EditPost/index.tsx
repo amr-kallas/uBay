@@ -9,18 +9,17 @@ import {
 import TextField from '../../../../components/input/TextField'
 import { useForm } from 'react-hook-form'
 import Select from '../../../../components/input/Select'
-import queries from '../../api/queries'
-import {queries as categoryQuery} from '../../../category/api/query'
+import queries, { keys } from '../../api/queries'
+import { queries as categoryQuery } from '../../../category/api/query'
 import { AddPost, StoreDetails } from '../../api/type'
 import Submit from '../../../../components/button/Submit'
 import { zodResolver } from '@hookform/resolvers/zod'
-// import { addSchema, defaultValues } from './validation'
-// import { z } from 'zod'
 import UploadImg from '../../../../components/input/UploadImg'
 import { useEffect } from 'react'
 import { PostDetail } from './helpers'
 import { addSchema, defaultValues } from '../AddPost/validation'
 import { CategoryDetails } from '../../../category/api/type'
+import { useQueryClient } from 'react-query'
 const EditPost = () => {
   const { id } = useParams() as { id: string }
   const { data, isLoading, isSuccess } = queries.Get(id)
@@ -37,17 +36,19 @@ const EditPost = () => {
     defaultValues: isSuccess ? PostDetail(data) : defaultValues,
     resolver: zodResolver(addSchema),
   })
-  const navigate=useNavigate()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
   useEffect(() => {
     if (data) reset(PostDetail(data))
   }, [data, reset])
 
   const onSubmit = (body: AddPost) => {
-    console.log(data)
     edit.mutate(
       { id, ...body },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          queryClient.setQueryData(keys.get(id).queryKey, data)
+          queryClient.invalidateQueries(keys.getAll._def)
           navigate(`/posts/${data?._id}`)
         },
         onError: (error) => {
@@ -81,7 +82,12 @@ const EditPost = () => {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <TextField control={control} name="title" label="Title" disabled={!isSuccess}/>
+        <TextField
+          control={control}
+          name="title"
+          label="Title"
+          disabled={!isSuccess}
+        />
         <TextField
           control={control}
           name="content"
@@ -90,7 +96,13 @@ const EditPost = () => {
           rows={3}
           disabled={!isSuccess}
         />
-        <TextField control={control} name="price" type="number" label="Price" disabled={!isSuccess}/>
+        <TextField
+          control={control}
+          name="price"
+          type="number"
+          label="Price"
+          disabled={!isSuccess}
+        />
         <Select disabled={!isSuccess} control={control} name="category">
           {category.data?.data.map((item: CategoryDetails) => (
             <MenuItem value={item._id} key={item._id}>

@@ -13,11 +13,13 @@ import { useState } from 'react'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import TuneIcon from '@mui/icons-material/Tune'
 import { useNavigate } from 'react-router-dom'
+import Storage from '../../../utils/Storage'
 const Account = () => {
-  const [value, setValue] = useState('account')
+  const [value, setValue] = useState(Storage.getAccountTab() ?? 'account')
   const theme = useTheme()
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
+    Storage.setAccountTab(newValue)
   }
   const navigate = useNavigate()
   const me = queries.GetMe()
@@ -72,7 +74,7 @@ const Account = () => {
             }}
             icon={<TuneIcon />}
             iconPosition="start"
-            value="post"
+            value="preferences"
             label="Post Preferences"
             onClick={() => navigate('/settings/preferences')}
           />

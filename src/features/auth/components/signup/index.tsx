@@ -106,9 +106,9 @@ const Signup = () => {
             Create Account
           </Submit>
           <Box sx={{ m: '30px auto 0', display: 'flex' }} component="span">
-            have an account?{' '}
-            <Link to="/login" style={{ color: theme.palette.primary[900] }}>
-              Login
+            have an account? {' '}
+            <Link to="/login" style={{ color: theme.palette.primary[900],marginLeft:'3px' }}>
+               {' '}Login
             </Link>
           </Box>
         </Stack>

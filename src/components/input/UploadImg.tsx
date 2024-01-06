@@ -54,6 +54,7 @@ const UploadImg = ({ onRemove, onUpload, error, imgURL }: UploadImg) => {
           border: `1px solid ${error ? '#d32f2f' : 'rgba(0, 0, 0, 0.23)'}`,
           borderRadius: '12px',
           cursor: 'pointer',
+          position:'relative',
           '&:hover': {
             border: `1px solid ${error ? '#d32f2f' : 'black'}`,
           },

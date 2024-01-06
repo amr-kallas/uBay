@@ -87,7 +87,7 @@ const Login = () => {
                 variant="contained"
                 sx={{
                   width: {
-                    xs: '70%',
+                    xs: '80%',
                     md: 'fit-content',
                   },
                   mx: 'auto !important',
@@ -99,7 +99,7 @@ const Login = () => {
             </Stack>
             <Box sx={{ m: '30px auto 0', textAlign: 'center' }} component="p">
               Don't have an account?
-              <Link to="/signup" style={{ color: theme.palette.primary[900] }}>
+              <Link to="/signup" style={{ color: theme.palette.primary[900],marginLeft:'5px' }}>
                 Create an account now
               </Link>
             </Box>

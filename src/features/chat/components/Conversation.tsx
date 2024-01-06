@@ -40,13 +40,16 @@ const Conversation = () => {
         <Box
           sx={{
             display: 'flex',
-            alignItems:'center',
+            alignItems: 'center',
             bgcolor: 'white',
           }}
         >
           <UserInformation isMeSeller={isMeSeller} />
           {iAmSeller && (
-            <IconButton sx={{ ml: 'auto !important',mr:1 }} onClick={handleOpen}>
+            <IconButton
+              sx={{ ml: 'auto !important', mr: 1 }}
+              onClick={handleOpen}
+            >
               <DiscountIcon sx={{ color: '#be185d' }} />
             </IconButton>
           )}

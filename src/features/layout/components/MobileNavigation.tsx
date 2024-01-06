@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { tabs } from '../constant/tabs'
 const MobileNavigation = () => {
-  const location = useLocation().pathname.slice(1)
+  const location = useLocation().pathname.split('/')[1]
   const [value, setValue] = useState(location)
   const theme = useTheme()
   const navigate = useNavigate()

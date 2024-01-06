@@ -4,7 +4,7 @@ import {
   ListItemText,
   ListSubheader,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link } from 'react-router-dom'
 import { ProfileList } from '../constant/List'
 const Profile = () => {
@@ -44,7 +44,7 @@ const Profile = () => {
           }}
         >
           <ListItemText primary={item.title}/>
-          <ArrowBackIcon />
+          <ArrowForwardIcon />
         </Link>
       </ListItemButton>
       ))}

@@ -6,6 +6,7 @@ import QrCode2Icon from '@mui/icons-material/QrCode2'
 import Loading from './Loading'
 import { useState } from 'react'
 import ProductQR from '../ProductQR'
+import NoData from '../../../../components/feedback/NoData'
 type Mine = {
   isBuy: boolean
 }
@@ -13,6 +14,16 @@ const Mine = ({ isBuy }: Mine) => {
   const [open, setOpen] = useState(false)
   const [product, setProduct] = useState<Wait | undefined>(undefined)
   const mine = queries.Mine(isBuy)
+  const isEmpty =
+    mine.isSuccess &&
+    (isBuy == false
+      ? mine.data.wait.length == 0 &&
+        mine.data.unpaid.length == 0 &&
+        mine.data.seller.length == 0 &&
+        mine.data.customer.length == 0
+      : mine.data.wait.length == 0 &&
+        mine.data.seller.length == 0 &&
+        mine.data.customer.length == 0)
   const navigate = useNavigate()
   const handleClick = (id: string) => {
     navigate(`/posts/${id}`)
@@ -31,6 +42,7 @@ const Mine = ({ isBuy }: Mine) => {
           <Loading />
         </>
       )}
+      {isEmpty && <NoData />}
       {!isBuy && (
         <>
           {mine.data?.wait.map((post: Wait) => (
@@ -62,9 +74,7 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price
-                        .toLocaleString()}{' '}
-                      S.Y
+                      {post.product.price.toLocaleString()} S.Y
                     </Typography>{' '}
                   </Box>
                   <Stack
@@ -153,9 +163,7 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.price
-                        .toLocaleString()}{' '}
-                      S.Y
+                      {post.price.toLocaleString()} S.Y
                     </Typography>{' '}
                   </Box>
                   <Stack direction="row" spacing={1} mt={2}>
@@ -234,9 +242,7 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price
-                        .toLocaleString()}{' '}
-                      S.Y
+                      {post.product.price.toLocaleString()} S.Y
                     </Typography>{' '}
                   </Box>
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
@@ -334,9 +340,7 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price
-                        .toLocaleString()}{' '}
-                      S.Y
+                      {post.product.price.toLocaleString()} S.Y
                     </Typography>{' '}
                   </Box>
                   <Stack
@@ -415,9 +419,7 @@ const Mine = ({ isBuy }: Mine) => {
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>
                     Price:{' '}
                     <Typography color="primary" ml={1}>
-                      {post.product.price
-                        .toLocaleString()}{' '}
-                      S.Y
+                      {post.product.price.toLocaleString()} S.Y
                     </Typography>{' '}
                   </Box>
                   <Box sx={{ mt: 1, color: '#777', display: 'flex' }}>

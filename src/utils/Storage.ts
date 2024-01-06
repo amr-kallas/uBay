@@ -22,5 +22,11 @@ const Storage = {
   getChatTab: () => {
     return localStorage.getItem('chat')
   },
+  setAccountTab: (index: string) => {
+    localStorage.setItem('account', index)
+  },
+  getAccountTab: () => {
+    return localStorage.getItem('account')
+  },
 }
 export default Storage

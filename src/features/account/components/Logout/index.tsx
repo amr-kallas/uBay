@@ -4,7 +4,7 @@ import {
   ListItemText,
   ListSubheader,
 } from '@mui/material'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link } from 'react-router-dom'
 const Logout = () => {
   return (
@@ -38,7 +38,7 @@ const Logout = () => {
           }}
         >
           <ListItemText primary="Logout" />
-          <ArrowBackIcon />
+          <ArrowForwardIcon />
         </Link>
       </ListItemButton>
     </List>

@@ -13,11 +13,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import queries from '../../account/api/queries'
 
 const Tabs = () => {
-  const location = useLocation().pathname.slice(1)
+  const location = useLocation().pathname.split('/')[1]
   const [value, setValue] = useState('home')
   const navigate = useNavigate()
   const me = queries.GetMe()
-
   useEffect(() => {
     if (
       tabs.some(
@@ -61,23 +60,30 @@ const Tabs = () => {
             }}
             value={tab.value}
             icon={
-              tab.icon.props && tab.icon.props.src
-                ? {
-                    ...tab.icon,
-                    props: { ...tab.icon.props, src: me.data?.photo },
-                  }
-                : tab.icon
+              tab.value === 'settings' && me.isLoading ? (
+                <Skeleton variant="circular" width={30} height={30} />
+              ) : tab.icon.props && tab.icon.props.src ? (
+                {
+                  ...tab.icon,
+                  props: { ...tab.icon.props, src: me.data?.photo },
+                }
+              ) : (
+                tab.icon
+              )
             }
             onClick={() => navigate(tab.path)}
           />
         ))}
         <Tab value="none" sx={{ position: 'absolute', marginLeft: -9999 }} />
       </MuiTabs>
-      <IconButton sx={{ display: { xs: 'block', sm: 'none' }, ml: 'auto' }} onClick={() => navigate('/settings')}>
+      <IconButton
+        sx={{ display: { xs: 'block', sm: 'none' }, ml: 'auto' }}
+        onClick={() => navigate('/settings')}
+      >
         {me.isLoading ? (
           <Skeleton variant="circular" width={30} height={30} />
         ) : (
-          <Box >
+          <Box>
             <Avatar src={me.data?.photo} sx={{ width: 30, height: 30 }} />
           </Box>
         )}

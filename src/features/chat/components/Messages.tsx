@@ -21,7 +21,8 @@ const Messages = () => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: { message: '' },
   })
-  const messagesEndRef = useRef<any>(null)
+  const ref = useRef<HTMLInputElement>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const theme = useTheme()
   const { id = '' } = useParams<string>()
   const messages = messageQuery.Messages(id as string)
@@ -39,6 +40,7 @@ const Messages = () => {
   useEffect(() => {
     socket.emit('join chat', id)
     reset({ message: '' })
+    ref.current?.focus()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
   useEffect(() => {
@@ -189,6 +191,7 @@ const Messages = () => {
         }}
       >
         <MessageInput
+          ref={ref}
           control={control}
           name="message"
           isLoading={addMessage.isLoading}

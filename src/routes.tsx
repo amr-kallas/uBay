@@ -21,6 +21,7 @@ import {
 } from './features/account'
 import Chat from './pages/chat'
 import Conversation from './features/chat/components/Conversation'
+import SomethingWentWrong from './components/feedback/SomethingWentWrong'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export default createBrowserRouter(
@@ -33,14 +34,14 @@ export default createBrowserRouter(
         <Route path="forgot-password" element={<ResetPassword />} />
       </Route>
       <Route element={<Auth />}>
-        <Route path="" element={<HomePage />}>
+        <Route element={<HomePage />}>
           <Route path="" element={<Post />} />
           <Route path="posts/new" element={<AddPost />} />
           <Route path="posts/edit/:id" element={<EditPost />} />
           <Route path="posts/:id" element={<PostDetails />} />
           <Route path="/transactions" element={<Transaction />} />
           <Route path="/settings" element={<Settings />}>
-            <Route path="" element={<Layout />} />
+            <Route element={<Layout />} />
             <Route path="account" element={<Layout />} />
             <Route path="logout" element={<LogoutForm />} />
             <Route path="preferences" element={<Preferences />} />
@@ -55,14 +56,10 @@ export default createBrowserRouter(
             path="/settings/password-forgot"
             element={<ForgotPassword />}
           />
-          <Route
-            path="/chats"
-            element={<Chat />}
-          />
-          <Route
-            path="/chats/:id"
-            element={<Conversation />}
-          />
+          <Route path="/settings/*" element={<Settings />} />
+          <Route path="/chats" element={<Chat />} />
+          <Route path="/chats/:id" element={<Conversation />} />
+          <Route path="*" element={<SomethingWentWrong />} />
         </Route>
       </Route>
     </Route>

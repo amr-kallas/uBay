@@ -1,6 +1,6 @@
 import { ArrowBack } from '@mui/icons-material'
 import { Avatar, Box, IconButton, Stack, Typography } from '@mui/material'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { queries as chatQuery } from '../api/queries'
 import queries from '../../account/api/queries'
 import Skeleton from '../../../components/feedback/Skeleton'
@@ -12,11 +12,17 @@ const UserInformation = ({ isMeSeller }: UserInformation) => {
   const { id } = useParams()
   const chat = chatQuery.GetChat(id as string)
   const me = queries.GetMe()
+  const navigate = useNavigate()
   const isLoading = me.isLoading || chat.isLoading
   const iAmSeller = chat.data?.seller._id == me.data?._id
   useEffect(() => {
     isMeSeller(iAmSeller, chat.data)
   }, [chat.data, iAmSeller, isMeSeller])
+  useEffect(() => {
+    if (!chat.isLoading && id != chat.data?.id) {
+      navigate('/chats')
+    }
+  }, [id, chat, navigate])
   return (
     <Stack
       direction="row"
@@ -56,11 +62,6 @@ const UserInformation = ({ isMeSeller }: UserInformation) => {
           </>
         )}
       </Stack>
-      {/* {iAmSeller && (
-        <IconButton sx={{ ml: 'auto !important' }} onClick={handleOpen}>
-          <DiscountIcon sx={{ color: '#be185d' }} />
-        </IconButton>
-      )} */}
     </Stack>
   )
 }
