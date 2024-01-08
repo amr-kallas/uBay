@@ -4,14 +4,17 @@ import { UseInfiniteQueryResult } from 'react-query'
 type infinite = {
   query: UseInfiniteQueryResult<any, unknown>
   children: React.ReactNode
+  isComment?: boolean
+  scrollId?: string
 }
-const InfiniteScroll = ({ children, query }: infinite) => {
+const InfiniteScroll = ({ children, query, isComment, scrollId }: infinite) => {
   const { hasNextPage, data, fetchNextPage } = query
   return (
     <Infinite
       dataLength={data?.pages.length ?? 0}
       next={fetchNextPage}
       hasMore={hasNextPage ?? false}
+      scrollableTarget={scrollId}
       loader={
         <Box
           sx={{
@@ -23,14 +26,14 @@ const InfiniteScroll = ({ children, query }: infinite) => {
             left: '50%',
             transform: 'translateX(-50%)',
             overflow: 'hidden',
-            bottom: { xs: 56, sm: 0 },
+            bottom: { xs: 56, sm: isComment ? 56 : 0 },
           }}
         >
           <CircularProgress />
         </Box>
       }
     >
-      {children}
+      <Box>{children}</Box>
     </Infinite>
   )
 }

@@ -11,8 +11,8 @@ export const keys = createQueryKeys('comment', {
   getAll: (params: ParamsWithId) => ({
     queryFn: async ({ pageParam = 1 }) => {
       params.page = pageParam
-      const data = await API.getAll(params)
-      return data
+      return await API.getAll(params)
+      
     },
     queryKey: [params],
   }),

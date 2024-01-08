@@ -32,8 +32,6 @@ const DrawerComment = () => {
     >
       <Box
         sx={{
-          position: 'fixed',
-          top: 0,
           width: { xs: 1, sm: 390 },
           bgcolor: 'white',
           zIndex: 11,
