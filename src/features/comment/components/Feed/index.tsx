@@ -11,11 +11,15 @@ const Comments = () => {
   const { id } = usePostIdContext()
   const comments = queries.Comments({ id, limit: 10 })
   const scrollId = useId()
-  
+
   return (
-    <Box id={scrollId} height={'auto'} sx={{
-      overflow:'auto'
-    }}  >
+    <Box
+      id={scrollId}
+      sx={{
+        overflow: 'auto',
+        height: 'auto',
+      }}
+    >
       <InfiniteScroll query={comments} isComment scrollId={scrollId}>
         <Box mt={2} mb={8} p={'0 16px'}>
           {comments.data?.pages.map((page: any) =>
