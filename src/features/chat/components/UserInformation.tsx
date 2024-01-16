@@ -55,7 +55,7 @@ const UserInformation = ({ isMeSeller }: UserInformation) => {
         {isLoading && <Skeleton widthRange={{ min: 40, max: 50 }} />}
         {!isLoading && (
           <>
-            <Typography variant="h6">{chat.data?.product.title}</Typography>
+            <Typography variant="h6">{chat.data?.product?.title}</Typography>
             <Typography variant="h6">
               | {iAmSeller ? chat.data?.customer.name : chat.data?.seller.name}{' '}
             </Typography>

@@ -59,7 +59,7 @@ const Sales = () => {
                 <Avatar src={chat.customer.photo} />
                 <Box>
                   <Typography variant="h6">{chat.customer.name}</Typography>
-                  <Typography>{chat.product.title}</Typography>
+                  <Typography>{chat.product?.title}</Typography>
                 </Box>
               </Stack>
               <Divider />
