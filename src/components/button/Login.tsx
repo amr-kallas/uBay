@@ -16,6 +16,8 @@ const Login = () => {
         borderRadius: '12px',
         position: 'relative',
         left: '-5px',
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
         '&:hover': {
           color: theme.palette.secondary[700],
         },

@@ -39,7 +39,7 @@ const Register = () => {
           <Box
             sx={{
               width: "100%",
-              height: { xs: 200, sm: 380 },
+              height: { xs: 200, sm: 1 },
               borderRadius: { xs: "0", sm: "12px" },
               overflow: "hidden",
               flex: { xs: 1, sm: 1.6 },
