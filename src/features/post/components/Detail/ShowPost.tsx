@@ -279,7 +279,28 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
             px: 2,
           }}
         >
-          {Me && (
+          {Me ||
+            (skeleton && (
+              <Button
+                sx={{
+                  bgcolor: theme.palette.primary.main,
+                  color: 'white',
+                  justifyContent: 'space-around',
+                  minWidth: 100,
+                  '&:hover': {
+                    bgcolor: theme.palette.primary.main,
+                  },
+                }}
+                onClick={Me ? openDrawerDiscount : () => {}}
+              >
+                <DiscountIcon sx={{ color: 'white', mr: 1 }} />
+                {postDetails && (
+                  <Typography variant="body1">View Discounts</Typography>
+                )}
+                {skeleton && <Skeleton widthRange={{ min: 20, max: 40 }} />}
+              </Button>
+            ))}
+          {!postDetails?.is_paid && (
             <Button
               sx={{
                 bgcolor: theme.palette.primary.main,
@@ -290,33 +311,17 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
                   bgcolor: theme.palette.primary.main,
                 },
               }}
-              onClick={openDrawerDiscount}
+              onClick={openDrawer}
             >
-              <DiscountIcon sx={{ color: 'white', mr: 1 }} />
-              {postDetails && (
-                <Typography variant="body1">View Discounts</Typography>
+              <LocalGroceryStoreIcon sx={{ color: 'white' }} />
+              {!skeleton && (
+                <Typography variant="body1">
+                  {postDetails?.price} S.Y
+                </Typography>
               )}
               {skeleton && <Skeleton widthRange={{ min: 20, max: 40 }} />}
             </Button>
           )}
-          <Button
-            sx={{
-              bgcolor: theme.palette.primary.main,
-              color: 'white',
-              justifyContent: 'space-around',
-              minWidth: 100,
-              '&:hover': {
-                bgcolor: theme.palette.primary.main,
-              },
-            }}
-            onClick={openDrawer}
-          >
-            <LocalGroceryStoreIcon sx={{ color: 'white' }} />
-            {postDetails && (
-              <Typography variant="body1">{postDetails.price} S.Y</Typography>
-            )}
-            {skeleton && <Skeleton widthRange={{ min: 20, max: 40 }} />}
-          </Button>
         </Box>
       </Stack>
       <Stack
@@ -377,7 +382,13 @@ const ShowPost = ({ postDetails, skeleton }: Details) => {
             >
               <img
                 src={postDetails.photos[currentImageIndex]}
-                style={{ display: 'flex', margin: 'auto',width:'100%',height:'100%',objectFit:'contain' }}
+                style={{
+                  display: 'flex',
+                  margin: 'auto',
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                }}
               />
               <IconButton
                 sx={{

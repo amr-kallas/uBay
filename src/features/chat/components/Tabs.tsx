@@ -38,13 +38,11 @@ const Tabs = () => {
         borderRight: '1px solid #eee',
         bgcolor: 'white',
         flex: 1.3,
+        maxHeight: 560,
+        overflow: 'auto',
       }}
     >
-      <MuiTabs
-        value={value}
-        onChange={handleChange}
-       
-      >
+      <MuiTabs value={value} onChange={handleChange}>
         <Tab
           sx={{
             fontSize: 15,

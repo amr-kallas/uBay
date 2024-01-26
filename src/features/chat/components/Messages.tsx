@@ -98,7 +98,16 @@ const Messages = () => {
               alignItems: 'center',
             }}
           >
-            <Typography variant="h4" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
+            <Typography
+              variant="h4"
+              sx={{
+                color: 'rgba(0, 0, 0, 0.6)',
+                textAlign:'center',
+                '@media(max-width:420px)': {
+                  fontSize: 20
+                },
+              }}
+            >
               There are no messages yet...
             </Typography>
           </Box>

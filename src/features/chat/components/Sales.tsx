@@ -12,7 +12,7 @@ const Sales = () => {
     (chat) => chat.seller._id == me.data?.id
   )
   return (
-    <Box>
+    <Box mb={{ xs: 7, sm: 0 }}>
       {chats.isSuccess && empty?.length == 0 && (
         <Box
           sx={{
